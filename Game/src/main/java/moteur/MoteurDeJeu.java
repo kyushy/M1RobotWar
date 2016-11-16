@@ -1,5 +1,6 @@
 package moteur;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -52,7 +53,8 @@ public class MoteurDeJeu {
 		}else{
 			boolean exist = false;
 			for (int i = 0; i < this.listeRobot.size(); i++) {
-				if((this.listeRobot.get(i).getX() == robot.getX()) && (this.listeRobot.get(i).getY() == robot.getY())){
+				if((this.listeRobot.get(i).getPosition().x == robot.getPosition().x) && 
+						(this.listeRobot.get(i).getPosition().y == robot.getPosition().y)){
 					exist = true;
 				}
 			}
@@ -65,11 +67,11 @@ public class MoteurDeJeu {
 	 * @return Robot
 	 */
 	public Robot creationRobot(){
-		Robot robot = new Robot(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
-				MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur()));
+		Robot robot = new Robot(new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
+				MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		while(robotExist(robot)){
-			robot = new Robot(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
-					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur()));
+			robot = new Robot(new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
+					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		}
 		return robot;
 	}

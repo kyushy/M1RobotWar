@@ -2,6 +2,7 @@ package moteur;
 
 import static org.junit.Assert.*;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -20,27 +21,28 @@ public class Test_Moteur {
 	
 	@Test
 	public void test_robotExistListeVide() {
-		Robot robotTest = new Robot(0,0);
+		Robot robotTest = new Robot(new Point(0,0));
 		assertEquals(moteurDeJeuTest.robotExist(robotTest), false);
 	}
 	
 	@Test
 	public void test_robotExistListeNonVidePlusieursRobots() {
 		ArrayList<Robot> robots = new ArrayList<Robot>();
-		robots.add(new Robot(0,4));
-		robots.add(new Robot(0,5));
-		robots.add(new Robot(6,0));
+		robots.add(new Robot(new Point(0,4)));
+		robots.add(new Robot(new Point(0,5)));
+		robots.add(new Robot(new Point(6,0)));
 		moteurDeJeuTest.setListeRobot(robots);
-		assertEquals(moteurDeJeuTest.robotExist(new Robot(0,5)), true);
+		assertEquals(moteurDeJeuTest.robotExist(new Robot(new Point(0,5))), true);
 	}
 	
 	@Test
 	public void test_robotExistListeNonVideUnRobot() {
 		ArrayList<Robot> robots = new ArrayList<Robot>();
-		robots.add(new Robot(0,0));
+		robots.add(new Robot(new Point(0,0)));
 		moteurDeJeuTest.setListeRobot(robots);
 		Robot robotUnique = moteurDeJeuTest.getListeRobot().get(0);
-		Robot robotDifferent = new Robot(robotUnique.getX()+1, robotUnique.getY()+1);
+		Point nouvellePosition = new Point(robotUnique.getPosition().x+1, robotUnique.getPosition().y+1);
+		Robot robotDifferent = new Robot(nouvellePosition);
 		assertEquals(moteurDeJeuTest.robotExist(robotDifferent), false);
 	}
 	
@@ -59,21 +61,21 @@ public class Test_Moteur {
 	
 	@Test
 	public void test_robotLePlusProchePlusieurs() {
-		Robot robotReference = new Robot(0,0);
+		Robot robotReference = new Robot(new Point(0,0));
 		ArrayList<Robot> robots = new ArrayList<Robot>();
-		robots.add(new Robot(0,4));
-		robots.add(new Robot(0,5));
-		robots.add(new Robot(6,0));
+		robots.add(new Robot(new Point(0,4)));
+		robots.add(new Robot(new Point(0,5)));
+		robots.add(new Robot(new Point(6,0)));
 		moteurDeJeuTest.setListeRobot(robots);
 		Robot robotPlusProche = moteurDeJeuTest.robotLePlusProche(robotReference);
 		
-		assertEquals(robotPlusProche.getX(), 0);
-		assertEquals(robotPlusProche.getY(), 4);
+		assertEquals(robotPlusProche.getPosition().x, 0);
+		assertEquals(robotPlusProche.getPosition().y, 4);
 	}
 	
 	@Test
 	public void test_robotLePlusProcheVide() {
-		Robot robotReference = new Robot(0,0);
+		Robot robotReference = new Robot(new Point(0,0));
 		Robot robotPlusProche = moteurDeJeuTest.robotLePlusProche(robotReference);
 		
 		assertEquals(robotPlusProche, null);
@@ -81,7 +83,7 @@ public class Test_Moteur {
 	
 	@Test
 	public void test_robotLePlusProcheJusteLui() {
-		Robot robotReference = new Robot(0,0);
+		Robot robotReference = new Robot(new Point(0,0));
 		ArrayList<Robot> robots = new ArrayList<Robot>();
 		robots.add(robotReference);
 		moteurDeJeuTest.setListeRobot(robots);
