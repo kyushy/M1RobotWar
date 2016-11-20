@@ -108,16 +108,23 @@ public class MoteurDeJeu {
 	 * Methode pour lancer le jeu
 	 */
 	public void start(){
-
+		
 		//Tant qu'il reste plus d'un robot en jeu
-		while(this.listeRobot.size()>1){
+		/*while(this.listeRobot.size()>1){
 			//On parcours la liste des robots et on leurs demande leurs actions 
 			for (int i = 0; i < this.listeRobot.size(); i++) {
+				System.out.println("for");
 				this.listeRobot.get(i).getAction();
 			}
 		}
 
-		System.out.println("Le gagnant est : " + this.listeRobot.get(0));
+		System.out.println("Le gagnant est : " + this.listeRobot.get(0));*/
+		
+		//On parcours la liste des robots et on leurs demande leurs actions 
+		for (int i = 0; i < this.listeRobot.size(); i++) {
+			this.listeRobot.get(i).getAction(); //sysout temporaire nouvelle position
+		}
+		
 
 	}
 
