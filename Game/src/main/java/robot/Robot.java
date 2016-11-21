@@ -11,6 +11,9 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 
+import plugins.Plugin_Attaque;
+import plugins.Plugin_Deplacement;
+
 /**
  * Class representant un robot
  */
@@ -22,18 +25,20 @@ public class Robot {
 	private int nombrePDV = 10;
 	private int energie = 10;
 	
+	//PLUGIN FIX : On utilisera ça après
+	private Plugin_Attaque pluginAttaque;
+	private Plugin_Deplacement pluginDeplacement;
+	
 	public Robot(String identifiant, Point pPosition){
 		this.position = pPosition;
 		this.identifiant = identifiant;
 	}
 	
 	public void getActionDeplacement(){
-		/*try {
-			Class.forName("Plugins.Plugin_Deplacement");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Plugin non trouve");
-			e.printStackTrace();
-		}*/
+
+		/* PLUGIN FIX : à utiliser plus tard
+		this.pluginDeplacement.getNouvellePosition(positionActuelle, longueurArene, largeurArene);
+		*/
 		
 		// Passage par URLClassLoader pour plugin de déplacement aléatoire
 		File customElementsDir = new File("../Plugins/target/classes");
@@ -105,6 +110,10 @@ public class Robot {
 	}
 	
 	public HashMap<String, Object> getActionAttaque(){
+		
+		/* PLUGIN FIX : à utiliser plus tard 
+		this.pluginAttaque.attaque(longueurArene, largeurArene);
+		*/
 		
 		File customElementsDir = new File("../Plugins/target/classes");
 		URL[] classLoaderUrls = null;
