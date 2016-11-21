@@ -2,6 +2,7 @@ package moteur;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 
@@ -66,11 +67,11 @@ public class MoteurDeJeu {
 	 * Creation du robot a des coordonnees aleatoire
 	 * @return Robot
 	 */
-	public Robot creationRobot(){
-		Robot robot = new Robot(new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
+	public Robot creationRobot() {
+		Robot robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
 				MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		while(robotExist(robot)){
-			robot = new Robot(new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
+			robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
 					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		}
 		return robot;
@@ -82,17 +83,17 @@ public class MoteurDeJeu {
 	 * @return Robot
 	 */
 	public Robot robotLePlusProche(Robot robotReference) {
-		
+
 		if (this.listeRobot.size() < 2) { return null; } // Pas de robot ou que lui-meme
-		
+
 		Robot robotProche = this.listeRobot.get(0);
 		double distanceSauvegardee = Robot.distanceEntreRobots(robotReference, this.listeRobot.get(0));
-		
+
 		for (int i = 1; i < this.listeRobot.size(); i++) {
-			
+
 			Robot robotCourant = this.listeRobot.get(i);
 			double distanceCourante = Robot.distanceEntreRobots(robotReference, robotCourant);
-			
+
 			if (distanceCourante < distanceSauvegardee) {
 				distanceSauvegardee = distanceCourante;
 				robotProche = robotCourant;
@@ -103,35 +104,73 @@ public class MoteurDeJeu {
 
 	}
 
+	/**
+	 * Methode pour verifier si un robot se trouve a la position indiquee
+	 * @param Point
+	 * @return Robot
+	 */
+	public Robot robotACettePosition(Point position) {
+
+		for (int i = 0; i < this.listeRobot.size(); i++) {
+			if ((this.listeRobot.get(i).getPosition().x == position.x) && 
+					(this.listeRobot.get(i).getPosition().y == position.y)) {
+				return this.listeRobot.get(i);
+			}
+		}
+		return null;
+	}
+
 
 	/**
 	 * Methode pour lancer le jeu
 	 */
-	public void start(){
+	public void start() {
 		
-		//Tant qu'il reste plus d'un robot en jeu
-		/*while(this.listeRobot.size()>1){
-			//On parcours la liste des robots et on leurs demande leurs actions 
+		int nbManches = 0;
+
+		// Tant qu'il reste plus d'un robot en jeu
+		while (this.listeRobot.size() > 1) {
+			
+			System.out.println("-- MANCHE " + nbManches + "--");
+
+			// On parcourt la liste des robots et on leur demande leurs actions
 			for (int i = 0; i < this.listeRobot.size(); i++) {
-				System.out.println("for");
-				this.listeRobot.get(i).getAction();
+				System.out.println("-> Au tour de : " + this.listeRobot.get(i));
+				
+				this.listeRobot.get(i).getActionDeplacement();
+				this.phaseAttaque(listeRobot.get(i).getActionAttaque()); // Pour le moment, un robot peut s'auto-attaquer
+			}
+			
+			nbManches++;
+			System.out.println();
+
+		}
+		
+		System.out.println("Le gagnant est : " + this.listeRobot.get(0));
+
+
+	}
+
+	public void phaseAttaque(HashMap<String, Object> dicAttaque) {
+
+		Robot robotVise = this.robotACettePosition((Point) dicAttaque.get("LIEU"));
+		if (robotVise != null) {
+			System.out.println("Un robot touche !");
+			robotVise.setNombrePDV(robotVise.getNombrePDV() - (Integer) dicAttaque.get("PUISSANCE"));
+
+			if (robotVise.getNombrePDV() <= 0) {
+				System.out.println("Un robot élimine");
+				this.listeRobot.remove(robotVise);
 			}
 		}
 
-		System.out.println("Le gagnant est : " + this.listeRobot.get(0));*/
-		
-		//On parcours la liste des robots et on leurs demande leurs actions 
-		for (int i = 0; i < this.listeRobot.size(); i++) {
-			this.listeRobot.get(i).getAction(); //sysout temporaire nouvelle position
-		}
-		
 
 	}
 
 	public ArrayList<Robot> getListeRobot() {
 		return listeRobot;
 	}
-	
+
 
 	public void setListeRobot(ArrayList<Robot> listeRobot) {
 		this.listeRobot = listeRobot;
@@ -145,6 +184,6 @@ public class MoteurDeJeu {
 	public static void main(String[] args) {
 		MoteurDeJeu mdj = new MoteurDeJeu(2, 10, 10);
 		mdj.start();
-	
+
 	}
 }

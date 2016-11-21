@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.HashMap;
 
 /**
  * Class representant un robot
@@ -16,15 +17,17 @@ import java.net.URLClassLoader;
 
 public class Robot {
 
+	private String identifiant;
 	private Point position;
 	private int nombrePDV = 10;
 	private int energie = 10;
 	
-	public Robot(Point pPosition){
+	public Robot(String identifiant, Point pPosition){
 		this.position = pPosition;
+		this.identifiant = identifiant;
 	}
 	
-	public void getAction(){
+	public void getActionDeplacement(){
 		/*try {
 			Class.forName("Plugins.Plugin_Deplacement");
 		} catch (ClassNotFoundException e) {
@@ -82,7 +85,10 @@ public class Robot {
 		}
 		
 		try {
-			System.out.println("Je me deplace de " + position + " a " + method.invoke(o, position, 10, 10));
+			Point nouvellePosition = (Point) method.invoke(o, position, 10, 10);
+			System.out.println("Je me deplace de " + position + " a " + nouvellePosition);
+			this.position = nouvellePosition;
+			
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			// TODO Auto-generated catch block
@@ -95,6 +101,77 @@ public class Robot {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+	
+	public HashMap<String, Object> getActionAttaque(){
+		
+		File customElementsDir = new File("../Plugins/target/classes");
+		URL[] classLoaderUrls = null;
+		try {
+			URL url = customElementsDir.toURI().toURL();
+			classLoaderUrls = new URL[]{ url };
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		URLClassLoader urlClassLoader = new URLClassLoader(classLoaderUrls);
+		Class<?> beanClass = null;
+		try {
+			beanClass = urlClassLoader.loadClass("plugins.Plugin_Attaque_Case_Aleatoire");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Method method = null;
+		try {
+			Class[] cArg = new Class[2];
+	        cArg[0] = int.class;
+	        cArg[1] = int.class;
+			method = beanClass.getDeclaredMethod("attaque", cArg);
+		} catch (NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Constructor<?> cons = null;
+		try {
+			cons = beanClass.getConstructor();
+		} catch (NoSuchMethodException | SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		Object o = null;
+		try {
+			o = cons.newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		HashMap<String, Object> retourDicAttaque = null;
+		try {
+			//System.out.println("J'attaque a " + method.invoke(o, 10, 10));
+			retourDicAttaque = (HashMap<String, Object>) method.invoke(o, 10, 10);
+			System.out.println("Mon attaque : " + retourDicAttaque);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			urlClassLoader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return retourDicAttaque;
 
 	}
 	
@@ -137,11 +214,17 @@ public class Robot {
 		this.energie = energie;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Robot [nombrePDV=" + nombrePDV + ", energie=" + energie + "]";
+		return "Robot [identifiant=" + identifiant + ", position=" + position
+				+ ", nombrePDV=" + nombrePDV + ", energie=" + energie + "]";
 	}
+
+	public String getIdentifiant() {
+		return identifiant;
+	}
+	
+	
 
 	
 }
