@@ -37,7 +37,7 @@ public class Robot {
 	public void getActionDeplacement(){
 
 		/* PLUGIN FIX : à utiliser plus tard
-		this.pluginDeplacement.getNouvellePosition(positionActuelle, longueurArene, largeurArene);
+		this.position = this.pluginDeplacement.getNouvellePosition(positionActuelle, longueurArene, largeurArene);
 		*/
 		
 		// Passage par URLClassLoader pour plugin de déplacement aléatoire
