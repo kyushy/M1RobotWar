@@ -1,6 +1,7 @@
 package moteur;
 
 import java.awt.Point;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,17 +79,18 @@ public class MoteurDeJeu {
 					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		}
 
-		Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
-		Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Case_Aleatoire");
+        try {
+            Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
+            Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Case_Aleatoire");
 
-		try {
-			robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
-			robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
+            robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
+            robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
 
-		return robot;
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return robot;
 	}
 
 	/**
@@ -196,9 +198,7 @@ public class MoteurDeJeu {
 	 */
 
 	public static void main(String[] args) {
-		PluginsLoader.getInstance().load();
 		MoteurDeJeu mdj = new MoteurDeJeu(2, 10, 10);
 		mdj.start();
-		//PluginsLoader.getInstance().close();
 	}
 }

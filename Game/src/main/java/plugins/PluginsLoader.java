@@ -11,7 +11,6 @@ import java.util.List;
 
 public class PluginsLoader {
 
-	private URLClassLoader loader;
 	private static PluginsLoader instance;
 	
 	private PluginsLoader(){}
@@ -24,40 +23,14 @@ public class PluginsLoader {
 			return new PluginsLoader();
 		}
 	}
-	
-	public void load(){
-		File pluginDir = new File("Plugins" + File.separator + "target" + File.separator + "classes" + File.separator + "plugins");
+
+	public Class<?> loadPlugin(String name) throws ClassNotFoundException, MalformedURLException {
+		File pluginDir = new File("Plugins" + File.separator + "target" + File.separator + "classes");
 		System.out.println("load file at " + pluginDir.getAbsolutePath());
 
-		URL[] urls = new URL[(int)pluginDir.length()];
-		for(int i = 0; i< pluginDir.listFiles().length; i++){
-			try {
-				System.out.println("file loaded :" + pluginDir.listFiles()[i].getName());
-				urls[i] = pluginDir.listFiles()[i].toURI().toURL();
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-		}
+		URL[] classLoaderUrls = new URL[]{ pluginDir.toURI().toURL() };
 
-		this.loader = new URLClassLoader(urls);
+        URLClassLoader loader = new URLClassLoader(classLoaderUrls);
+        return loader.loadClass(name);
 	}
-
-	public Class<?> loadPlugin(String className){
-		try {
-			return this.loader.loadClass(className);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-
-	public void close(){
-		try {
-			this.loader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 }
