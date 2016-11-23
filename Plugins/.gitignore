@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 .classpath
 .project
 /.settings/
 /bin/
 
 /target/
-=======
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -18,4 +16,4 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
->>>>>>> 2d30c66b361b089b510c2e0acd4144eaf2a03163
+
