@@ -36,12 +36,13 @@ public class Robot {
 	
 	public void getActionDeplacement(){
 
-		/* PLUGIN FIX : à utiliser plus tard
-		this.position = this.pluginDeplacement.getNouvellePosition(positionActuelle, longueurArene, largeurArene);
-		*/
+		//PLUGIN FIX
+		Point newPosition = this.pluginDeplacement.getNouvellePosition(this.position, 10, 10);
+		System.out.println("Je me deplace de " + position + " a " + newPosition);
+		this.position = newPosition;
 		
 		// Passage par URLClassLoader pour plugin de déplacement aléatoire
-		File customElementsDir = new File("../Plugins/target/classes");
+		/* File customElementsDir = new File("../Plugins/target/classes");
 		URL[] classLoaderUrls = null;
 		try {
 			URL url = customElementsDir.toURI().toURL();
@@ -105,17 +106,18 @@ public class Robot {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} */
 
 	}
 	
 	public HashMap<String, Object> getActionAttaque(){
 		
-		/* PLUGIN FIX : à utiliser plus tard 
-		this.pluginAttaque.attaque(longueurArene, largeurArene);
-		*/
-		
-		File customElementsDir = new File("../Plugins/target/classes");
+		//PLUGIN FIX
+		return this.pluginAttaque.attaque(10, 10);
+
+
+
+		/*File customElementsDir = new File("../Plugins/target/classes");
 		URL[] classLoaderUrls = null;
 		try {
 			URL url = customElementsDir.toURI().toURL();
@@ -181,7 +183,7 @@ public class Robot {
 		}
 		
 		return retourDicAttaque;
-
+		*/
 	}
 	
 	/**
@@ -208,19 +210,24 @@ public class Robot {
 		return nombrePDV;
 	}
 
-
 	public void setNombrePDV(int nombrePDV) {
 		this.nombrePDV = nombrePDV;
 	}
-
 
 	public int getEnergie() {
 		return energie;
 	}
 
-
 	public void setEnergie(int energie) {
 		this.energie = energie;
+	}
+
+	public void setPluginAttaque(Plugin_Attaque pluginAttaque) {
+		this.pluginAttaque = pluginAttaque;
+	}
+
+	public void setPluginDeplacement(Plugin_Deplacement pluginDeplacement) {
+		this.pluginDeplacement = pluginDeplacement;
 	}
 
 	@Override
@@ -232,8 +239,5 @@ public class Robot {
 	public String getIdentifiant() {
 		return identifiant;
 	}
-	
-	
 
-	
 }

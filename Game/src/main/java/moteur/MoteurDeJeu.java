@@ -6,6 +6,9 @@ import java.util.HashMap;
 
 import javax.swing.JFrame;
 
+import plugins.Plugin_Attaque;
+import plugins.Plugin_Deplacement;
+import plugins.PluginsLoader;
 import robot.Robot;
 import GUI.Arene;
 import GUI.Plateau;
@@ -74,6 +77,17 @@ public class MoteurDeJeu {
 			robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
 					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		}
+
+		Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
+		Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Case_Aleatoire");
+
+		try {
+			robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
+			robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
 		return robot;
 	}
 
@@ -182,8 +196,9 @@ public class MoteurDeJeu {
 	 */
 
 	public static void main(String[] args) {
+		PluginsLoader.getInstance().load();
 		MoteurDeJeu mdj = new MoteurDeJeu(2, 10, 10);
 		mdj.start();
-
+		//PluginsLoader.getInstance().close();
 	}
 }
