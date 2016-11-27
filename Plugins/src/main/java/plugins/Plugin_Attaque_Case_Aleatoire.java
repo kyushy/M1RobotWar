@@ -1,6 +1,7 @@
 package plugins;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Plugin_Attaque_Case_Aleatoire implements Plugin_Attaque {
@@ -8,7 +9,8 @@ public class Plugin_Attaque_Case_Aleatoire implements Plugin_Attaque {
 	private static int ENERGIE = 1;
 	private static int PUISSANCE = 1;
 
-	public HashMap<String, Object> attaque(int longueurArene, int largeurArene) {
+	public HashMap<String, Object> attaque(Point positionAttaquant, 
+			int longueurArene, int largeurArene) {
 		HashMap<String, Object> dicAttaque = new HashMap<String, Object>();
 		
 		int maxRandomX = longueurArene;
@@ -21,7 +23,11 @@ public class Plugin_Attaque_Case_Aleatoire implements Plugin_Attaque {
 		
 		dicAttaque.put("ENERGIE", ENERGIE);
 		dicAttaque.put("PUISSANCE", PUISSANCE);
-		dicAttaque.put("LIEU", new Point(lieuX, lieuY));
+		
+		ArrayList<Point> listeLieux = new ArrayList<Point>();
+		listeLieux.add(new Point(lieuX, lieuY));
+		dicAttaque.put("LIEU", listeLieux);
+		
 		return dicAttaque;
 	}
 

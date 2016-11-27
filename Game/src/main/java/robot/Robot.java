@@ -113,7 +113,7 @@ public class Robot {
 	public HashMap<String, Object> getActionAttaque(){
 		
 		//PLUGIN FIX
-		return this.pluginAttaque.attaque(10, 10);
+		return this.pluginAttaque.attaque(this.position, 10, 10);
 
 
 

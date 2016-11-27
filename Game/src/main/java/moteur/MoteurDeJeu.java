@@ -169,7 +169,10 @@ public class MoteurDeJeu {
 
 	public void phaseAttaque(HashMap<String, Object> dicAttaque) {
 
-		Robot robotVise = this.robotACettePosition((Point) dicAttaque.get("LIEU"));
+		// TODO : Point à ArrayList<Point>, ne pas prendre le premier betement
+		ArrayList<Point> listeLieux = (ArrayList<Point>) dicAttaque.get("LIEU");
+		Robot robotVise = this.robotACettePosition((Point) listeLieux.get(0));
+		
 		if (robotVise != null) {
 			System.out.println("Un robot touche !");
 			robotVise.setNombrePDV(robotVise.getNombrePDV() - (Integer) dicAttaque.get("PUISSANCE"));
