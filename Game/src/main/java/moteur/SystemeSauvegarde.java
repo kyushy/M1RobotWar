@@ -1,11 +1,16 @@
 package moteur;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import robot.Robot;
 
@@ -25,7 +30,7 @@ public class SystemeSauvegarde {
 		System.out.println(this.moteur.getListeRobot().size() + " robots");
 		for (Robot r : this.moteur.getListeRobot()) {
 			System.out.println(r);
-			
+
 			HashMap<String, Object> dataRobot = new HashMap<String, Object>();
 			loadDataFields(r, 1, dataRobot);
 			dataRobots.add(dataRobot);
@@ -44,9 +49,9 @@ public class SystemeSauvegarde {
 		catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
-		
+
 		return savePartie;
-		
+
 	}
 
 	//TODO : cas tableau
@@ -103,8 +108,36 @@ public class SystemeSauvegarde {
 		}
 	}
 
-	public void chargerSauvegarde() {
+	public HashMap<String, Object> chargerSauvegarde() {
 
+		HashMap<String, Object> dataPartie = null;
+		try {
+			FileInputStream fis = new FileInputStream("robotwarplay.ser");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			dataPartie = (HashMap) ois.readObject();
+			ois.close();
+			fis.close();
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+			return dataPartie;
+		}
+		catch (ClassNotFoundException c)
+		{
+			System.out.println("Class not found");
+			c.printStackTrace();
+			return dataPartie;
+		}
+		/*System.out.println("Deserialisation de la hashmap..");
+		// Display content using Iterator
+		Set set = dataPartie.entrySet();
+		Iterator iterator = set.iterator();
+		while(iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry)iterator.next();
+			System.out.print("key: "+ mentry.getKey() + " & Value: ");
+			System.out.println(mentry.getValue());
+		}*/
+		return dataPartie;
 	}
 
 }
