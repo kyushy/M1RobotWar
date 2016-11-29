@@ -9,17 +9,17 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import plugins.Plugin_Attaque_Case_Aleatoire;
+import plugins.Plugin_Attaque_Longue_Portee_Aleatoire;
 
-public class Test_Plugin_Attaque_Case_Aleatoire {
+public class Test_Plugin_Attaque_Longue_Portee_Aleatoire {
 	
-	private static Plugin_Attaque_Case_Aleatoire pluginTest;
+	private static Plugin_Attaque_Longue_Portee_Aleatoire pluginTest;
 	private static int longueurArene = 10;
 	private static int largueurArene = 5;
 	
 	@Before
 	public void initialize() {
-		pluginTest = new Plugin_Attaque_Case_Aleatoire();
+		pluginTest = new Plugin_Attaque_Longue_Portee_Aleatoire();
 	}
 	
 	@Test

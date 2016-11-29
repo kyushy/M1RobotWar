@@ -9,10 +9,17 @@ public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque {
 	private static int ENERGIE = 1;
 	private static int PUISSANCE = 1;
 	private static int PORTEE = 1;
-	// TODO : graphisme
+	// TODO : graphisme > image d'un poing aux endroits vises ?
 
+	/*
+	 * Attaque faible de courte portee qui vise les cases autour (diagonales comprises) 
+	 * sur le terrain
+	 * @see plugins.Plugin_Attaque#attaque(java.awt.Point, int, int)
+	 * @return HashMap<String, Object> dicAttaque avec "LIEU"=>ArrayList<Point>, "ENERGIE"=>int et "PUISSANCE"=>int
+	 */
 	public HashMap<String, Object> attaque(Point positionAttaquant, 
 			int longueurArene, int largeurArene) {
+		
 		HashMap<String, Object> dicAttaque = new HashMap<String, Object>();
 		
 		ArrayList<Point> listeLieux = new ArrayList<Point>();
