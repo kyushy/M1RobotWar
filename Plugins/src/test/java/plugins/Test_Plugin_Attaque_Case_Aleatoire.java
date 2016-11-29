@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import plugins.Plugin_Attaque_Case_Aleatoire;
 
-public class Test_Attaque_Case_Aleatoire {
+public class Test_Plugin_Attaque_Case_Aleatoire {
 	
 	private static Plugin_Attaque_Case_Aleatoire pluginTest;
 	private static int longueurArene = 10;
@@ -86,5 +86,38 @@ public class Test_Attaque_Case_Aleatoire {
 		}
 		
 		assertTrue(borneZeroLongueurTrouvee && borneZeroLargueurTrouvee);
+	}
+	
+	@Test
+	public void test_attaquePasAutoAttaque() {
+		
+		Point positionAttaquant = new Point(0,0);
+		
+		for (int i = 0; i < 1000; i++) {
+			HashMap<String, Object> dictAttaque = pluginTest.attaque(new Point(0,0), longueurArene, largueurArene);
+			ArrayList<Point> listeLieux = (ArrayList<Point>) dictAttaque.get("LIEU");
+		
+			for (Point p : listeLieux) {
+				assertFalse(p.equals(positionAttaquant));
+			}
+		}
+	
+	}
+	
+	@Test
+	public void test_attaquePasAuMemeEndroit() {
+		
+		Point positionAttaquant = new Point(0,0);
+
+		for (int i = 0; i < 1000; i++) {
+			HashMap<String, Object> dictAttaque = pluginTest.attaque(new Point(0,0), longueurArene, largueurArene);
+			ArrayList<Point> listeLieux = (ArrayList<Point>) dictAttaque.get("LIEU");
+		
+			assertTrue(! listeLieux.get(0).equals(listeLieux.get(1))
+					&& ! listeLieux.get(1).equals(listeLieux.get(2))
+					&& ! listeLieux.get(0).equals(listeLieux.get(2)));
+			
+		}
+	
 	}
 }
