@@ -4,17 +4,21 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
-import plugins.Plugin_Graphisme;
+import plugins.Plugin_Graphique_Couleur;
+import plugins.Plugin_Graphique_Forme;
 import robot.Robot;
 
 public class GRobot extends Component {
 
 	private Robot data;
-	private Plugin_Graphisme pluginGraphique;
+	private Plugin_Graphique_Couleur pluginGraphiqueCouleur;
+	private Plugin_Graphique_Forme pluginGraphiqueForme;
 	
-	public GRobot(Robot data, Plugin_Graphisme graphique){
+	public GRobot(Robot data, Plugin_Graphique_Couleur graphiqueCouleur, 
+			Plugin_Graphique_Forme graphiqueForme){
 		this.data = data;
-		this.pluginGraphique = graphique;
+		this.pluginGraphiqueCouleur = graphiqueCouleur;
+		this.pluginGraphiqueForme = graphiqueForme;
 	}
 	
 	public Robot getData(){
@@ -23,8 +27,9 @@ public class GRobot extends Component {
 	
 	@Override
 	public void paint(Graphics g){
-		//g.setColor(pluginGraphique.getColor());
+		//g.setColor(pluginGraphiqueCouleur.getColor());
 		g.setColor(Color.BLUE);
+		//this.pluginGraphiqueForme.dessinerForme(g, data.getPosition().x, data.getPosition().y, 20, 20);
 		g.fillRect(data.getPosition().x, data.getPosition().y, 20, 20);
 	}
 }

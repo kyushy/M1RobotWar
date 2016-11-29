@@ -2,7 +2,7 @@ package plugins;
 
 import java.awt.Color;
 
-public class Plugin_Couleur_Aleatoire implements Plugin_Graphisme {
+public class Plugin_Graphique_Couleur_Aleatoire implements Plugin_Graphique_Couleur {
 
 	public Color getColor() {
 			int r = (int) Math.round(Math.random() * 255);
