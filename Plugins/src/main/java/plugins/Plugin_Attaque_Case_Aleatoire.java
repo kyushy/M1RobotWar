@@ -7,26 +7,42 @@ import java.util.HashMap;
 public class Plugin_Attaque_Case_Aleatoire implements Plugin_Attaque {
 	
 	private static int ENERGIE = 1;
-	private static int PUISSANCE = 1;
+	private static int PUISSANCE = 2;
 
+	/*
+	 * Attaque de longue portee qui vise quatre cases aleatoires (robot ennemi ou non) 
+	 * exceptee la case de l'attaquant sur l'ensemble du terrain
+	 * @see plugins.Plugin_Attaque#attaque(java.awt.Point, int, int)
+	 * @return HashMap<String, Object> dicAttaque avec "LIEU"=>ArrayList<Point>, "ENERGIE"=>int et "PUISSANCE"=>int
+	 */
 	public HashMap<String, Object> attaque(Point positionAttaquant, 
 			int longueurArene, int largeurArene) {
+		
 		HashMap<String, Object> dicAttaque = new HashMap<String, Object>();
 		
 		int maxRandomX = longueurArene;
 		int minRandomX = 0;
-		int lieuX = (int) (minRandomX + (Math.random() * (maxRandomX - minRandomX)));
 		
 		int maxRandomY = largeurArene;
 		int minRandomY = 0;
-		int lieuY = (int) (minRandomY + (Math.random() * (maxRandomY - minRandomY)));
-		
-		dicAttaque.put("ENERGIE", ENERGIE);
-		dicAttaque.put("PUISSANCE", PUISSANCE);
 		
 		ArrayList<Point> listeLieux = new ArrayList<Point>();
-		listeLieux.add(new Point(lieuX, lieuY));
+		
+		while (listeLieux.size() < 4) {
+			
+			int lieuX = (int) (minRandomX + (Math.random() * (maxRandomX - minRandomX)));
+			int lieuY = (int) (minRandomY + (Math.random() * (maxRandomY - minRandomY)));
+			Point lieu = new Point(lieuX, lieuY);
+			
+			// Ne pas viser deux fois au même endroit et ne pas s'auto-attaquer
+			if (! listeLieux.contains(lieu) && ! lieu.equals(positionAttaquant)) {
+				listeLieux.add(new Point(lieuX, lieuY));
+			}
+		}
+		
 		dicAttaque.put("LIEU", listeLieux);
+		dicAttaque.put("ENERGIE", ENERGIE);
+		dicAttaque.put("PUISSANCE", PUISSANCE);
 		
 		return dicAttaque;
 	}
