@@ -81,8 +81,13 @@ public class MoteurDeJeu {
 
         try {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
-            Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Case_Aleatoire");
-
+            Class cAtk;
+            if (this.listeRobot.size()%2 == 0) {
+            	cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Case_Aleatoire");
+            }
+            else {
+                cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
+            }
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
             robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
 
@@ -169,17 +174,20 @@ public class MoteurDeJeu {
 
 	public void phaseAttaque(HashMap<String, Object> dicAttaque) {
 
-		// TODO : Point à ArrayList<Point>, ne pas prendre le premier betement
 		ArrayList<Point> listeLieux = (ArrayList<Point>) dicAttaque.get("LIEU");
-		Robot robotVise = this.robotACettePosition((Point) listeLieux.get(0));
+		System.out.println("Lieux vises : " + listeLieux);
 		
-		if (robotVise != null) {
-			System.out.println("Un robot touche !");
-			robotVise.setNombrePDV(robotVise.getNombrePDV() - (Integer) dicAttaque.get("PUISSANCE"));
-
-			if (robotVise.getNombrePDV() <= 0) {
-				System.out.println("Un robot élimine");
-				this.listeRobot.remove(robotVise);
+		for (Point p : listeLieux) {
+			Robot robotVise = this.robotACettePosition(p);
+			
+			if (robotVise != null) {
+				System.out.println("Un robot touche !");
+				robotVise.setNombrePDV(robotVise.getNombrePDV() - (Integer) dicAttaque.get("PUISSANCE"));
+	
+				if (robotVise.getNombrePDV() <= 0) {
+					System.out.println("Un robot élimine");
+					this.listeRobot.remove(robotVise);
+				}
 			}
 		}
 
