@@ -83,7 +83,7 @@ public class MoteurDeJeu {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
             Class cAtk;
             if (this.listeRobot.size()%2 == 0) {
-            	cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Case_Aleatoire");
+            	cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Longue_Portee_Aleatoire");
             }
             else {
                 cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
