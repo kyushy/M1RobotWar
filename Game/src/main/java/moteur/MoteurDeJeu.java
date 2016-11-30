@@ -79,7 +79,7 @@ public class MoteurDeJeu {
 			robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
 					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		}
-
+/*
         try {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
             Class cAtk;
@@ -95,7 +95,7 @@ public class MoteurDeJeu {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | MalformedURLException e) {
             e.printStackTrace();
         }
-
+*/
         return robot;
 	}
 

@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -14,6 +17,10 @@ import javax.swing.JMenuItem;
 
 import moteur.MoteurDeJeu;
 import moteur.SystemeSauvegarde;
+import plugins.Plugin_Attaque;
+import plugins.Plugin_Deplacement;
+import plugins.PluginsLoader;
+import robot.Robot;
 
 /**
  *	Classe principale qui va contenir tous les elements graphiques du jeu
@@ -123,9 +130,46 @@ public class Plateau extends JFrame implements ActionListener{
 		//Si on clique sur charger un plugin
 		if( arg0.getSource() == this.loadMenuItem ){
 			JFileChooser f = new JFileChooser();
+			f.setCurrentDirectory(new File("../Plugins" + File.separator + "target" + File.separator + "classes")); 
+			f.changeToParentDirectory(); 
 			if(f.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-				//this.listePlugins.add(f.getSelectedFile().getAbsolutePath());
-				this.listePlugins.add(f.getSelectedFile());
+				try {
+					String chaine = f.getSelectedFile().getName();
+					chaine = chaine.replaceAll(".class", "");
+					Class cl = PluginsLoader.getInstance().loadPlugin("plugins."+chaine);
+					Class clInterface[] = cl.getInterfaces();
+					
+					for (int i = 0; i < clInterface.length; i++) {
+						//Si c'est un plugin d'attaque
+						if (clInterface[i].getName().equals("plugins.Plugin_Attaque")){
+							ArrayList<Robot> listeRobot = this.mdj.getListeRobot();
+							for (Robot robot : listeRobot) {
+								try {
+									robot.setPluginAttaque((Plugin_Attaque) cl.newInstance());
+								} catch (InstantiationException | IllegalAccessException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						
+						//Si c'est un plugin de déplacement
+						if (clInterface[i].getName().equals("plugins.Plugin_Deplacement")){
+							ArrayList<Robot> listeRobot = this.mdj.getListeRobot();
+							for (Robot robot : listeRobot) {
+								try {
+									robot.setPluginDeplacement((Plugin_Deplacement) cl.newInstance());
+								} catch (InstantiationException | IllegalAccessException e) {
+									e.printStackTrace();
+								}
+							}
+						}						
+					}
+					
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
