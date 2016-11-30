@@ -29,6 +29,7 @@ public class MoteurDeJeu {
 	public MoteurDeJeu(int nbRobot, int longueur, int largeur){
 
 		this.plateauDeJeu = new Plateau(new Arene(longueur, largeur));
+		this.plateauDeJeu.setMoteurDeJeu(this);
 		//Creation du nombre de robots
 		for(int i=0; i<nbRobot; i++){
 			Robot robot = creationRobot();
@@ -210,6 +211,6 @@ public class MoteurDeJeu {
 
 	public static void main(String[] args) {
 		MoteurDeJeu mdj = new MoteurDeJeu(2, 10, 10);
-		mdj.start();
+		//mdj.start();
 	}
 }
