@@ -177,9 +177,9 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 			}
 		}
 		
-		//Si on clique sur Lancer le jeu
+		//Si on clique sur Lancer le jeu 
 		if(arg0.getSource() == this.runPluginsMenuItem){
-			this.mdj.start();
+			new Thread(this.mdj).start();
 		}
 		
 		//Si on clique sur sauvegarder partie

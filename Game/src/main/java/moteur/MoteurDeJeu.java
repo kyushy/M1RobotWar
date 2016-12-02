@@ -15,7 +15,7 @@ import robot.Robot;
 import GUI.Arene;
 import GUI.Plateau;
 
-public class MoteurDeJeu extends Observable {
+public class MoteurDeJeu extends Observable implements Runnable {
 
 	private ArrayList<Robot> listeRobot = new ArrayList<>();
 	private Plateau plateauDeJeu;
@@ -153,9 +153,12 @@ public class MoteurDeJeu extends Observable {
 		
 		int nbManches = 0;
 
-		// Tant qu'il reste plus d'un robot en jeu
+		this.setChanged();
+		this.notifyObservers();
+				
+		// Tant qu'il reste plus d'un robot et que le jeu n'est pas en pause
 		while (this.listeRobot.size() > 1) {
-			
+				
 			System.out.println("-- MANCHE " + nbManches + "--");
 
 			// On parcourt la liste des robots et on leur demande leurs actions
@@ -166,11 +169,18 @@ public class MoteurDeJeu extends Observable {
 				this.setChanged();
 				this.notifyObservers();
 				this.phaseAttaque(listeRobot.get(i).getActionAttaque()); // Pour le moment, un robot peut s'auto-attaquer
+				
+				try {
+					Thread.currentThread().sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			nbManches++;
 			System.out.println();
-
+			
+			
 		}
 		
 		System.out.println("Le gagnant est : " + this.listeRobot.get(0));
@@ -182,6 +192,7 @@ public class MoteurDeJeu extends Observable {
 
 		ArrayList<Point> listeLieux = (ArrayList<Point>) dicAttaque.get("LIEU");
 		System.out.println("Lieux vises : " + listeLieux);
+		
 		
 		for (Point p : listeLieux) {
 			Robot robotVise = this.robotACettePosition(p);
@@ -200,6 +211,13 @@ public class MoteurDeJeu extends Observable {
 
 	}
 
+	
+	@Override
+	public void run() {
+		this.start();
+	}
+	
+	
 	public ArrayList<Robot> getListeRobot() {
 		return listeRobot;
 	}
@@ -209,6 +227,7 @@ public class MoteurDeJeu extends Observable {
 		this.listeRobot = listeRobot;
 	}
 
+	
 	/**
 	 * Methode main
 	 * @param args
@@ -218,4 +237,5 @@ public class MoteurDeJeu extends Observable {
 		MoteurDeJeu mdj = new MoteurDeJeu(2, 10, 10);
 		//mdj.start();
 	}
+
 }
