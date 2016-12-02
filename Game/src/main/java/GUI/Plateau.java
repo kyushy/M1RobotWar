@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -58,7 +61,6 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 	public Plateau(Arene arene){
 		this.setSize(300, 300);
 		this.setLayout(new BorderLayout());
-
 
 
 		this.menuBar = new JMenuBar();
@@ -201,8 +203,15 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+	public void update(Observable o, Object arg) {
+		
+		for(Component c : this.getArene().getComponents()){
+			c.setBackground(Color.WHITE);
+		}
+		
+		for(Robot r : mdj.getListeRobot()){
+			this.getArene().paintPanel(r.getPosition().x, r.getPosition().y);
+		}
 		
 	}
 

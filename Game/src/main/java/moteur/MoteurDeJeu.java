@@ -163,6 +163,8 @@ public class MoteurDeJeu extends Observable {
 				System.out.println("-> Au tour de : " + this.listeRobot.get(i));
 				
 				this.listeRobot.get(i).getActionDeplacement();
+				this.setChanged();
+				this.notifyObservers();
 				this.phaseAttaque(listeRobot.get(i).getActionAttaque()); // Pour le moment, un robot peut s'auto-attaquer
 			}
 			

@@ -14,6 +14,10 @@ public class GRobot extends Component {
 	private Plugin_Graphique_Couleur pluginGraphiqueCouleur;
 	private Plugin_Graphique_Forme pluginGraphiqueForme;
 	
+	public GRobot(Robot data){
+		this.data = data;
+	}
+	
 	public GRobot(Robot data, Plugin_Graphique_Couleur graphiqueCouleur, 
 			Plugin_Graphique_Forme graphiqueForme){
 		this.data = data;
@@ -25,11 +29,12 @@ public class GRobot extends Component {
 		return this.data;
 	}
 	
-	@Override
-	public void paint(Graphics g){
+	
+	public void draw(Graphics g){
 		//g.setColor(pluginGraphiqueCouleur.getColor());
 		g.setColor(Color.BLUE);
 		//this.pluginGraphiqueForme.dessinerForme(g, data.getPosition().x, data.getPosition().y, 20, 20);
-		g.fillRect(data.getPosition().x, data.getPosition().y, 20, 20);
+		//g.fillRect(data.getPosition().x, data.getPosition().y, 20, 20);
+		g.fillRect(0, 0, 20, 20);
 	}
 }

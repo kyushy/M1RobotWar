@@ -56,9 +56,9 @@ public class Arene extends JPanel{
 		return largeur;
 	}
 	
-	public void addTo(GRobot r ,int x, int y){
-		JPanel panel = (JPanel)this.getComponent(y*10 + x);
-		panel.add(r, BorderLayout.CENTER);
+	public void paintPanel(int x, int y){
+		JPanel panel = (JPanel) this.getComponent(y*10 + x);
+		panel.setBackground(Color.BLUE);
 	}
 	
 }
