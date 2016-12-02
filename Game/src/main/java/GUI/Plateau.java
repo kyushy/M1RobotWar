@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,7 +28,7 @@ import robot.Robot;
  *	Classe principale qui va contenir tous les elements graphiques du jeu
  *	TODO : d�finir un layout pour disposer les divers elements
  */
-public class Plateau extends JFrame implements ActionListener{
+public class Plateau extends JFrame implements ActionListener, Observer{
 
 	/**
 	 * 
@@ -117,7 +119,7 @@ public class Plateau extends JFrame implements ActionListener{
 		//ajout de l'arene au centre de la fenetre
 		this.arene = arene;
 		this.add(arene, BorderLayout.CENTER);
-
+		
 		this.setVisible(true);
 	}
 
@@ -196,6 +198,12 @@ public class Plateau extends JFrame implements ActionListener{
 	
 	public void setMoteurDeJeu(MoteurDeJeu mdj){
 		this.mdj = mdj;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

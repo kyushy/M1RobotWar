@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 
 import javax.swing.JFrame;
 
@@ -14,7 +15,7 @@ import robot.Robot;
 import GUI.Arene;
 import GUI.Plateau;
 
-public class MoteurDeJeu {
+public class MoteurDeJeu extends Observable {
 
 	private ArrayList<Robot> listeRobot = new ArrayList<>();
 	private Plateau plateauDeJeu;
@@ -30,6 +31,8 @@ public class MoteurDeJeu {
 
 		this.plateauDeJeu = new Plateau(new Arene(longueur, largeur));
 		this.plateauDeJeu.setMoteurDeJeu(this);
+		this.addObserver(plateauDeJeu);
+		
 		//Creation du nombre de robots
 		for(int i=0; i<nbRobot; i++){
 			Robot robot = creationRobot();

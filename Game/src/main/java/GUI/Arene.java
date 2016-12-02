@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ public class Arene extends JPanel{
 	private int largeur;
 	
 
-	
-
 	public Arene (int longueur, int largeur){
 		
 		this.longueur = longueur;
@@ -39,9 +38,9 @@ public class Arene extends JPanel{
 		//DEBUG : affichage des cases 
 		this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		for (int i =0; i<(largeur*longueur); i++){
-		    final JLabel label = new JLabel("");
-		    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		    this.add(label);
+		    JPanel panel = new JPanel(new BorderLayout());
+		    panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		    this.add(panel);
 		}
 		
 		
@@ -55,6 +54,11 @@ public class Arene extends JPanel{
 
 	public int getLargeur() {
 		return largeur;
+	}
+	
+	public void addTo(GRobot r ,int x, int y){
+		JPanel panel = (JPanel)this.getComponent(y*10 + x);
+		panel.add(r, BorderLayout.CENTER);
 	}
 	
 }
