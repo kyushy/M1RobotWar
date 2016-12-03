@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -217,7 +218,8 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 				fileACharger = f.getSelectedFile();
 			}
 			if (fileACharger != null){
-				sysSave.chargerSauvegarde(fileACharger);
+				HashMap<String, Object> dataPartie = sysSave.chargerSauvegarde(fileACharger);
+				this.mdj.restaurerPartie(dataPartie);
 			}
 		}
 	}
