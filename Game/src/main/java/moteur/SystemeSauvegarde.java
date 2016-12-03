@@ -34,7 +34,7 @@ public class SystemeSauvegarde {
 			System.out.println(r);
 
 			HashMap<String, Object> dataRobot = new HashMap<String, Object>();
-			loadDataFields(r, 5, dataRobot);
+			loadDataFields(r, dataRobot);
 			dataRobots.add(dataRobot);
 		}
 
@@ -56,9 +56,8 @@ public class SystemeSauvegarde {
 
 	}
 
-	public void loadDataFields(Object o, int profondeur, HashMap<String, Object> hmapRetour) {
+	public void loadDataFields(Object o, HashMap<String, Object> hmapRetour) {
 
-		//System.out.println("Profondeur : " + profondeur + " avec " + o);
 		if (o == null) { return; }
 		Class superClass = o.getClass();
 
@@ -69,52 +68,30 @@ public class SystemeSauvegarde {
 			for (int i = 0; i < fields.length; i++) {
 
 				fields[i].setAccessible(true);
-
-				// Tableau
-				if (fields[i].getType().isArray()) {
-				//System.out.println("tableau");
-					//System.out.print(fields[i].getName() + "=");
-					//System.out.print(" {");
-					try {
-						for (int j = 0; j < Array.getLength(fields[i].get(o)); j++) {
-							//System.out.print(Array.get(fields[i].get(r), j) + ";");
-						}
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					//System.out.print("} ");
-
-				}
+				
 				// Primitif
-				else if (fields[i].getType().isPrimitive()) {
-					//System.out.println("primitif");
+				if (fields[i].getType().isPrimitive()) {
 					try {
 						hmapRetour.put(fields[i].getName(), fields[i].get(o));
 					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				// Objet
 				else {
-					//System.out.println("objet");
-					/*if (profondeur>=0) {
-						try {
-							this.loadDataFields(fields[i].get(o), profondeur--, hmapRetour);
-						} catch (IllegalArgumentException
-								| IllegalAccessException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}*/
 					try {
-						/*System.out.println(fields[i].getName());
-						System.out.println();
-						System.out.println(fields[i].get(o));*/
-						hmapRetour.put(fields[i].getName(), fields[i].get(o));
+						if (fields[i].get(o) == null) { 
+							hmapRetour.put(fields[i].getName(), fields[i].get(o));
+						}
+						else {
+							if (fields[i].get(o).getClass().getName().contains("plugins.")) {
+								hmapRetour.put(fields[i].getName(), fields[i].get(o).getClass().getName());
+							}
+							else {
+								hmapRetour.put(fields[i].getName(), fields[i].get(o));
+							}
+						}
 					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
