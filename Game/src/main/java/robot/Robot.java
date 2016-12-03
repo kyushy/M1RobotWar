@@ -32,6 +32,9 @@ public class Robot {
 		this.identifiant = identifiant;
 	}
 	
+	public Robot(){
+	}
+	
 	public Point getActionDeplacement(){
 
 		//PLUGIN FIX
@@ -62,10 +65,6 @@ public class Robot {
 		int y2 = robot2.getPosition().y;
 
 		return (double) Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
-	}
-	
-	public void setPosition(Point p){
-		this.position = p;
 	}
 	
 	public Point getPosition() {
@@ -135,4 +134,14 @@ public class Robot {
 	public void setPluginForme(Plugin_Graphique_Forme pluginForme) {
 		this.pluginForme = pluginForme;
 	}
+
+	public void setPosition(Point position) {
+		this.position = position;
+	}
+
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
+	}
+	
+	
 }
