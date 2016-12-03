@@ -56,9 +56,10 @@ public class Arene extends JPanel{
 		return largeur;
 	}
 	
-	public void paintPanel(int x, int y){
+	public void paintPanel(Robot r, int x, int y){
 		JPanel panel = (JPanel) this.getComponent(y*10 + x);
-		panel.setBackground(Color.BLUE);
+		System.out.println(r.getCouleur());
+		panel.setBackground(r.getCouleur());
 	}
 	
 }
