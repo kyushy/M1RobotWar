@@ -174,7 +174,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 					//On retire l'energie de l'action
 					this.listeRobot.get(i).retirerEnergie((Integer) dicAttaque.get("ENERGIE"));
 					this.phaseAttaque(dicAttaque);
-					listeRobot.get(i).donnerEnergie();
+					//listeRobot.get(i).donnerEnergie();
 				}
 				
 				
@@ -187,7 +187,12 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				
 			}
 			
+			for (int i = 0; i < this.listeRobot.size(); i++) {
+				listeRobot.get(i).donnerEnergie();
+			}
+			
 			nbManches++;
+			
 			System.out.println();
 			
 			
