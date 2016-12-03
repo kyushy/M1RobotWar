@@ -50,9 +50,9 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	public void restaurerPartie(HashMap<String, Object> dataPartie) {
 		
 		ArrayList<HashMap<String, Object>> dataRobots = (ArrayList<HashMap<String, Object>>) dataPartie.get("Robot");
-		System.out.println(dataRobots)
+		System.out.println(dataRobots);
 		
-		;this.listeRobot = new ArrayList<>();
+		this.listeRobot = new ArrayList<>();
 		
 		for (int i = 0; i < dataRobots.size(); i++) {
 			HashMap<String, Object> dataRobot = ((HashMap<String, Object>) dataRobots.get(i));
@@ -61,36 +61,28 @@ public class MoteurDeJeu extends Observable implements Runnable {
 			Robot robot = new Robot();
 			
 			for (String key : dataRobot.keySet()) {
+				
 				System.out.println("key = " + key);
 				System.out.println("value = " + dataRobot.get(key));
 				
+				if (dataRobot.get(key) == null) { continue; } 
+				
 				try {
 					
-					Class value = null;
+					Class classPlugin = null;
+					Class interfacePlugin = null;
+					
 					if (dataRobot.get(key).toString().contains("plugins.")) {
 						try {
-							value = PluginsLoader.getInstance().loadPlugin(dataRobot.get(key).toString());
-							//System.out.println(dataRobot.get(key).toString().substring(8));
-							//value = Class.forName(dataRobot.get(key).toString().substring(8)).cast(value);
-							//value = Class.forName(dataRobot.get(key).toString()).cast(value);
-							// plugins.Plugin_Graphique_Couleur_Aleatoire => plugins.Plugin_Graphique
-							Class<?> clInterface[] = ((Class<?>) value).getInterfaces();
+							classPlugin = PluginsLoader.getInstance().loadPlugin(dataRobot.get(key).toString());
+							Class<?> clInterface[] = ((Class<?>) classPlugin).getInterfaces();
 							
 							for (int j = 0; j < clInterface.length; j++) {
 								if (clInterface[j].getName().contains("plugins.")){
 									String nameInterface = clInterface[j].getName();
-									try {
-										Object o = Class.forName(nameInterface).cast(value.newInstance());
-										System.out.println(o.toString());
-									} catch (InstantiationException | IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									//System.out.println("nameInterface " + nameInterface);
-									//value = (Class) Class.forName(nameInterface).cast(value);
+									interfacePlugin = Class.forName(nameInterface);
 								}
 							}
-					
 							
 						} catch (MalformedURLException e) {
 							e.printStackTrace();
@@ -98,16 +90,13 @@ public class MoteurDeJeu extends Observable implements Runnable {
 					}
 					
 					Class<?> c = Class.forName("robot.Robot");
-					for (int j = 0; j < c.getDeclaredMethods().length; j++) {
-						System.out.println(c.getDeclaredMethods()[j]);
-					}
 					
 					String keySetter = key.substring(0, 1).toUpperCase() + key.substring(1);
 					Method method;
 					try {
 						
-						if (value != null) { // plugin
-							method = c.getDeclaredMethod("set" + keySetter, value.getClass());
+						if (classPlugin != null) { // plugin
+							method = c.getDeclaredMethod("set" + keySetter, interfacePlugin);
 						}
 						else if (dataRobot.get(key) instanceof Integer) {
 								method = c.getDeclaredMethod("set" + keySetter, int.class);
@@ -117,8 +106,12 @@ public class MoteurDeJeu extends Observable implements Runnable {
 						}
 						
 						
-						if (value != null) { // plugin
-							method.invoke(robot, value);
+						if (classPlugin != null) { // plugin
+							try {
+								method.invoke(robot, interfacePlugin.cast(classPlugin.newInstance()));
+							} catch (InstantiationException e) {
+								e.printStackTrace();
+							}
 						}
 						else {
 							method.invoke(robot, dataRobot.get(key));
@@ -142,7 +135,9 @@ public class MoteurDeJeu extends Observable implements Runnable {
 			
 			this.listeRobot.add(robot);
 		}
-		this.run();
+
+		new Thread(this).start();
+		
 	}
 
 	public static int nombreAleaLongueur(int max){
