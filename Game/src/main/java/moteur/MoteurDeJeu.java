@@ -181,6 +181,8 @@ public class MoteurDeJeu extends Observable implements Runnable {
 			
 		}
 		
+		this.setChanged();
+		this.notifyObservers();
 		System.out.println("Le gagnant est : " + this.listeRobot.get(0));
 
 
