@@ -19,7 +19,8 @@ public class MoteurDeJeu extends Observable implements Runnable {
 
 	private ArrayList<Robot> listeRobot = new ArrayList<>();
 	private Plateau plateauDeJeu;
-
+	private volatile boolean pause = false;
+	
 	/**
 	 * Constructeur du Moteur de jeu prenant en param�tre le nombre de robot dans le jeu, la longueur du terrain et la largeur 
 	 * @param nbRobot
@@ -202,8 +203,6 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				}
 			}
 		}
-
-
 	}
 
 	
@@ -211,7 +210,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	public void run() {
 		this.start();
 	}
-	
+
 	
 	public ArrayList<Robot> getListeRobot() {
 		return listeRobot;

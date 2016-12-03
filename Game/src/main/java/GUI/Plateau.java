@@ -97,7 +97,7 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 		this.partieMenu.setText("Partie");
 		this.partieMenu.add(this.saveSave);
 		this.partieMenu.add(this.loadSave);
-
+		
 
 		//exitMenuItem
 		this.exitMenuItem.setText("Fermer");
@@ -110,6 +110,7 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 		//runPluginsMenuItem
 		this.runPluginsMenuItem.setText("Lancer le jeu");
 		this.runPluginsMenuItem.addActionListener(this);
+		
 		
 		this.loadSave.setText("Charger sauvegarde");
 		this.loadSave.addActionListener(this);
