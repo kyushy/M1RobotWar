@@ -66,14 +66,31 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				
 				try {
 					
-					Object value = null;
+					Class value = null;
 					if (dataRobot.get(key).toString().contains("plugins.")) {
 						try {
 							value = PluginsLoader.getInstance().loadPlugin(dataRobot.get(key).toString());
 							//System.out.println(dataRobot.get(key).toString().substring(8));
 							//value = Class.forName(dataRobot.get(key).toString().substring(8)).cast(value);
-							value = Class.forName(dataRobot.get(key).toString()).cast(value);
+							//value = Class.forName(dataRobot.get(key).toString()).cast(value);
 							// plugins.Plugin_Graphique_Couleur_Aleatoire => plugins.Plugin_Graphique
+							Class<?> clInterface[] = ((Class<?>) value).getInterfaces();
+							
+							for (int j = 0; j < clInterface.length; j++) {
+								if (clInterface[j].getName().contains("plugins.")){
+									String nameInterface = clInterface[j].getName();
+									try {
+										Object o = Class.forName(nameInterface).cast(value.newInstance());
+										System.out.println(o.toString());
+									} catch (InstantiationException | IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									//System.out.println("nameInterface " + nameInterface);
+									//value = (Class) Class.forName(nameInterface).cast(value);
+								}
+							}
+					
 							
 						} catch (MalformedURLException e) {
 							e.printStackTrace();
@@ -120,18 +137,12 @@ public class MoteurDeJeu extends Observable implements Runnable {
 					
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
-				}
-			
-				
-			
+				}			
 			}
 			
 			this.listeRobot.add(robot);
-			
 		}
-		
 		this.run();
-		
 	}
 
 	public static int nombreAleaLongueur(int max){
