@@ -238,7 +238,7 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 		}
 		
 		for(Robot r : mdj.getListeRobot()){
-			this.getArene().paintPanel(r.getPosition().x, r.getPosition().y);
+			this.getArene().paintPanel(r, r.getPosition().x, r.getPosition().y);
 		}	
 	}
 }
