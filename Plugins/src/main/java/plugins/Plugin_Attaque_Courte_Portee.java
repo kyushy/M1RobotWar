@@ -1,10 +1,11 @@
 package plugins;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque {
+public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque, Serializable {
 	
 	private static int ENERGIE = 1;
 	private static int PUISSANCE = 1;

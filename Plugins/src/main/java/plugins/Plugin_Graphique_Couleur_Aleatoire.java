@@ -1,8 +1,9 @@
 package plugins;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Plugin_Graphique_Couleur_Aleatoire implements Plugin_Graphique_Couleur {
+public class Plugin_Graphique_Couleur_Aleatoire implements Plugin_Graphique_Couleur, Serializable {
 
 	public Color getColor() {
 			int r = (int) Math.round(Math.random() * 255);

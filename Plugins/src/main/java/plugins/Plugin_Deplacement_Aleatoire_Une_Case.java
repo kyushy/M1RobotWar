@@ -1,9 +1,10 @@
 package plugins;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Plugin_Deplacement_Aleatoire_Une_Case implements Plugin_Deplacement {
+public class Plugin_Deplacement_Aleatoire_Une_Case implements Plugin_Deplacement, Serializable {
 
 	/**
 	 * Nouvelles coordonnees aleatoires avec deplacement d'une case (inclus diagonale)

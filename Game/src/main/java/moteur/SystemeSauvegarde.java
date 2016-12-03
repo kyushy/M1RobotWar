@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class SystemeSauvegarde {
 			System.out.println(r);
 
 			HashMap<String, Object> dataRobot = new HashMap<String, Object>();
-			loadDataFields(r, 1, dataRobot);
+			loadDataFields(r, 5, dataRobot);
 			dataRobots.add(dataRobot);
 		}
 
@@ -55,10 +56,9 @@ public class SystemeSauvegarde {
 
 	}
 
-	//TODO : cas tableau
 	public void loadDataFields(Object o, int profondeur, HashMap<String, Object> hmapRetour) {
 
-		System.out.println("Profondeur : " + profondeur + " avec " + o);
+		//System.out.println("Profondeur : " + profondeur + " avec " + o);
 		if (o == null) { return; }
 		Class superClass = o.getClass();
 
@@ -71,17 +71,24 @@ public class SystemeSauvegarde {
 				fields[i].setAccessible(true);
 
 				// Tableau
-				/*if (fields[i].getType().isArray()) {
-					System.out.print(fields[i].getName() + "=");
-					System.out.print(" {");
-					for (int j = 0; j < Array.getLength(fields[i].get(r)); j++) {
-						System.out.print(Array.get(fields[i].get(r), j) + ";");
+				if (fields[i].getType().isArray()) {
+				//System.out.println("tableau");
+					//System.out.print(fields[i].getName() + "=");
+					//System.out.print(" {");
+					try {
+						for (int j = 0; j < Array.getLength(fields[i].get(o)); j++) {
+							//System.out.print(Array.get(fields[i].get(r), j) + ";");
+						}
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					System.out.print("} ");
+					//System.out.print("} ");
 
 				}
 				// Primitif
-				else*/ if (fields[i].getType().isPrimitive()) {
+				else if (fields[i].getType().isPrimitive()) {
+					//System.out.println("primitif");
 					try {
 						hmapRetour.put(fields[i].getName(), fields[i].get(o));
 					} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -91,7 +98,8 @@ public class SystemeSauvegarde {
 				}
 				// Objet
 				else {
-					if (profondeur>=0) {
+					//System.out.println("objet");
+					/*if (profondeur>=0) {
 						try {
 							this.loadDataFields(fields[i].get(o), profondeur--, hmapRetour);
 						} catch (IllegalArgumentException
@@ -99,6 +107,15 @@ public class SystemeSauvegarde {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+					}*/
+					try {
+						/*System.out.println(fields[i].getName());
+						System.out.println();
+						System.out.println(fields[i].get(o));*/
+						hmapRetour.put(fields[i].getName(), fields[i].get(o));
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 

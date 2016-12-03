@@ -240,4 +240,8 @@ public class Robot {
 		return identifiant;
 	}
 
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+
 }
