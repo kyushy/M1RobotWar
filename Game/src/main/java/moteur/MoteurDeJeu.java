@@ -221,7 +221,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		return listeRobot;
 	}
 
-
+	//Modification de la liste des robots
 	public void setListeRobot(ArrayList<Robot> listeRobot) {
 		this.listeRobot = listeRobot;
 	}
