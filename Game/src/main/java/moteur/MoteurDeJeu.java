@@ -82,23 +82,18 @@ public class MoteurDeJeu extends Observable implements Runnable {
 			robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
 					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
 		}
-/*
+
         try {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
-            Class cAtk;
-            if (this.listeRobot.size()%2 == 0) {
-            	cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Longue_Portee_Aleatoire");
-            }
-            else {
-                cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
-            }
+            Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
+
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
             robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | MalformedURLException e) {
             e.printStackTrace();
         }
-*/
+
         return robot;
 	}
 
@@ -234,7 +229,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	 */
 
 	public static void main(String[] args) {
-		MoteurDeJeu mdj = new MoteurDeJeu(2, 10, 10);
+		MoteurDeJeu mdj = new MoteurDeJeu(10, 10, 10);
 		//mdj.start();
 	}
 
