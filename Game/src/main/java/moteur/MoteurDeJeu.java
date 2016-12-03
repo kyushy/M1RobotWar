@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import plugins.Plugin_Attaque;
 import plugins.Plugin_Deplacement;
 import plugins.Plugin_Graphique_Couleur;
-import plugins.Plugin_Graphique_Forme;
 import plugins.PluginsLoader;
 import robot.Robot;
 import GUI.Arene;
@@ -90,12 +89,10 @@ public class MoteurDeJeu extends Observable implements Runnable {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
             Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
             Class cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Aleatoire");
-            Class cForme = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Forme_Rectangle");
 
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
             robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
             robot.setPluginCouleur((Plugin_Graphique_Couleur)cColor.newInstance());
-            robot.setPluginForme((Plugin_Graphique_Forme)cForme.newInstance());
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | MalformedURLException e) {
             e.printStackTrace();
