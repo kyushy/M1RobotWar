@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -58,6 +59,7 @@ public class Arene extends JPanel{
 	
 	public void paintPanel(Robot r, int x, int y){
 		JPanel panel = (JPanel) this.getComponent(y*10 + x);
+		//r.getPluginForme().dessinerForme(r.getCouleur(), panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight());
 		panel.setBackground(r.getCouleur());
 	}
 	
