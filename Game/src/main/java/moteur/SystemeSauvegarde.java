@@ -1,5 +1,6 @@
 package moteur;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class SystemeSauvegarde {
 		this.moteur = moteur;
 	}
 
-	public HashMap<String, Object> sauvegarder() {
+	public HashMap<String, Object> sauvegarder(File cheminDeSauvegarde) {
 
 		HashMap<String, Object> savePartie = new HashMap<>();
 
@@ -39,12 +40,12 @@ public class SystemeSauvegarde {
 		savePartie.put("Robot", dataRobots);
 
 		try {
-			FileOutputStream fos = new FileOutputStream("robotwarplay.ser");
+			FileOutputStream fos = new FileOutputStream(cheminDeSauvegarde);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(savePartie);
 			oos.close();
 			fos.close();
-			System.out.println("Données sauvegardées sur robotwarplay.ser");
+			System.out.println("Données sauvegardées sur" + cheminDeSauvegarde.getAbsolutePath());
 		}
 		catch(IOException ioe) {
 			ioe.printStackTrace();
@@ -108,11 +109,11 @@ public class SystemeSauvegarde {
 		}
 	}
 
-	public HashMap<String, Object> chargerSauvegarde() {
+	public HashMap<String, Object> chargerSauvegarde(File cheminVersauvegarde) {
 
 		HashMap<String, Object> dataPartie = null;
 		try {
-			FileInputStream fis = new FileInputStream("robotwarplay.ser");
+			FileInputStream fis = new FileInputStream(cheminVersauvegarde /*"robotwarplay.ser"*/);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			dataPartie = (HashMap) ois.readObject();
 			ois.close();

@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -183,14 +184,40 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 		}
 		
 		//Si on clique sur sauvegarder partie
-		if(arg0.getSource() == this.loadSave){
-			SystemeSauvegarde sysSave = new SystemeSauvegarde(this.mdj);
-			sysSave.sauvegarder();
-		}
-		//Si on clique sur charger partie
 		if(arg0.getSource() == this.saveSave){
 			SystemeSauvegarde sysSave = new SystemeSauvegarde(this.mdj);
-			sysSave.chargerSauvegarde();
+			
+			//On affiche la fenetre pour creer le  fichier
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setDialogTitle("Specify a file to save");
+			
+			int userSelection = fileChooser.showSaveDialog(this);
+			File fileToSave = null;
+			if (userSelection == JFileChooser.APPROVE_OPTION) {
+				//On creer le fichier
+				fileToSave = fileChooser.getSelectedFile();
+				//On lui ajoute l'extension
+				fileToSave = new File(fileToSave.getAbsolutePath()+".ser");
+				//System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+			}
+			//On appel la méthode de save
+			if (fileToSave != null){
+				sysSave.sauvegarder(fileToSave);
+			}
+		}
+		
+		//Si on clique sur charger partie
+		if(arg0.getSource() == this.loadSave){
+			SystemeSauvegarde sysSave = new SystemeSauvegarde(this.mdj);
+			
+			JFileChooser f = new JFileChooser();
+			File fileACharger = null;
+			if(f.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+				fileACharger = f.getSelectedFile();
+			}
+			if (fileACharger != null){
+				sysSave.chargerSauvegarde(fileACharger);
+			}
 		}
 	}
 	
