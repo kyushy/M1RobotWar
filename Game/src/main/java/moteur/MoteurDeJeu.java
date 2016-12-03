@@ -167,13 +167,24 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				this.listeRobot.get(i).getActionDeplacement();
 				this.setChanged();
 				this.notifyObservers();
-				this.phaseAttaque(listeRobot.get(i).getActionAttaque()); // Pour le moment, un robot peut s'auto-attaquer
+				HashMap<String, Object> dicAttaque = listeRobot.get(i).getActionAttaque();
+				
+				//Si on dispose d'assez d'energie pour attaquer
+				if((Integer) dicAttaque.get("ENERGIE")< listeRobot.get(i).getEnergie()){
+					//On retire l'energie de l'action
+					this.listeRobot.get(i).retirerEnergie((Integer) dicAttaque.get("ENERGIE"));
+					this.phaseAttaque(dicAttaque);
+					listeRobot.get(i).donnerEnergie();
+				}
+				
 				
 				try {
 					Thread.currentThread().sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				//on donne l'energie de fin de tour
+				
 			}
 			
 			nbManches++;

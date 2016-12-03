@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Plugin_Attaque_Longue_Portee_Aleatoire implements Plugin_Attaque, Serializable {
 	
-	private static int ENERGIE = 1;
+	private static int ENERGIE = 2;
 	private static int PUISSANCE = 2;
 	// TODO : graphisme > image d'un cible arc aux endroits vises ?
 

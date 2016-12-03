@@ -84,6 +84,15 @@ public class Robot {
 	public void setEnergie(int energie) {
 		this.energie = energie;
 	}
+	
+
+	public void retirerEnergie(int energie){
+		this.energie -= energie;
+	}
+	
+	public void donnerEnergie(){
+		this.energie++;
+	}
 
 	public void setPluginAttaque(Plugin_Attaque pluginAttaque) {
 		this.pluginAttaque = pluginAttaque;
@@ -123,73 +132,4 @@ public class Robot {
 	public void setPluginForme(Plugin_Graphique_Forme pluginForme) {
 		this.pluginForme = pluginForme;
 	}
-
-	/*
-	// Passage par URLClassLoader pour plugin de déplacement aléatoire
-		/* File customElementsDir = new File("../Plugins/target/classes");
-		URL[] classLoaderUrls = null;
-		try {
-			URL url = customElementsDir.toURI().toURL();
-			classLoaderUrls = new URL[]{ url };
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		URLClassLoader urlClassLoader = new URLClassLoader(classLoaderUrls);
-		Class<?> beanClass = null;
-		try {
-			beanClass = urlClassLoader.loadClass("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Method method = null;
-		try {
-			Class[] cArg = new Class[3];
-	        cArg[0] = java.awt.Point.class;
-	        cArg[1] = int.class;
-	        cArg[2] = int.class;
-			method = beanClass.getDeclaredMethod("getNouvellePosition", cArg);
-		} catch (NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Constructor<?> cons = null;
-		try {
-			cons = beanClass.getConstructor();
-		} catch (NoSuchMethodException | SecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		Object o = null;
-		try {
-			o = cons.newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			Point nouvellePosition = (Point) method.invoke(o, position, 10, 10);
-			System.out.println("Je me deplace de " + position + " a " + nouvellePosition);
-			this.position = nouvellePosition;
-			
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			urlClassLoader.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */
-
 }
