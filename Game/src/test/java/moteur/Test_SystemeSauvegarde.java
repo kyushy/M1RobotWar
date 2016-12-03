@@ -2,6 +2,8 @@ package moteur;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,26 +33,27 @@ public class Test_SystemeSauvegarde {
 		//System.out.println("dataRobots : " + dataRobots);
 		
 		HashMap<String, Object> dataRobot1 = ((HashMap<String, Object>) dataRobots.get(0));
-		System.out.println("dataRobot : " + dataRobot1);
+		//System.out.println("dataRobot : " + dataRobot1);
 		
-		/*System.out.println("identifiant : " + dataRobot1.get("identifiant"));
-		System.out.println("energie : " + dataRobot1.get("energie"));
-		System.out.println("position : " + dataRobot1.get("position"));*/
-		
-		/*assertTrue(dataRobot1.get("identifiant") == "0"
-				&& (Integer)dataRobot1.get("energie") == 10
-				&& (Integer)dataRobot1.get("x") >= 0 
-				&& (Integer)dataRobot1.get("y") >= 0
-				&& (Integer)dataRobot1.get("nombrePDV") == 10
-				);*/
+		Point point = (Point) dataRobot1.get("position");
+		int cordX = point.x;
+		// Voir si les informations de chaque type sont recuperees correctement
+		assertTrue((Integer)dataRobot1.get("energie") == 10
+				&& dataRobot1.get("pluginCouleur").toString().contains("plugins.Plugin_Graphique_Couleur")
+				&& (Color) dataRobot1.get("couleur") != null
+				&& cordX >= 0
+				);
 		
 		HashMap<String, Object> dataRobot2 = ((HashMap<String, Object>) dataRobots.get(1));
-		System.out.println("dataRobot2 : " + dataRobot2);
+		//System.out.println("dataRobot2 : " + dataRobot2);
 		
+		// ... S'il y en a plusieurs aussi
+		Point point2 = (Point) dataRobot2.get("position");
+		int cordX2 = point2.x;
 		assertTrue((Integer)dataRobot2.get("energie") == 10
-				&& (Integer)dataRobot2.get("x") >= 0 
-				&& (Integer)dataRobot2.get("y") >= 0
-				&& (Integer)dataRobot2.get("nombrePDV") == 10
+				&& dataRobot2.get("pluginCouleur").toString().contains("plugins.Plugin_Graphique_Couleur")
+				&& (Color) dataRobot2.get("couleur") != null
+				&& cordX2 >= 0
 				);
 	}
 	
