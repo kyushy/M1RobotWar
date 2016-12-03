@@ -290,9 +290,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 					//On retire l'energie de l'action
 					this.listeRobot.get(i).retirerEnergie((Integer) dicAttaque.get("ENERGIE"));
 					this.phaseAttaque(dicAttaque);
-					//listeRobot.get(i).donnerEnergie();
 				}
-				
 				
 				try {
 					Thread.currentThread().sleep(100);

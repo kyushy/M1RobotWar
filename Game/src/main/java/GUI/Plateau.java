@@ -61,7 +61,8 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 	private ArrayList<File> listePlugins = new ArrayList<>();
 	
 	public Plateau(Arene arene){
-		this.setSize(300, 300);
+		this.setTitle("ROBOTWAR <3 Laeticia jtm, Fred le bestou");
+		this.setSize(600, 600);
 		this.setLayout(new BorderLayout());
 
 
