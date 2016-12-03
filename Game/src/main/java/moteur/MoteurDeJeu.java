@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import plugins.Plugin_Attaque;
 import plugins.Plugin_Deplacement;
+import plugins.Plugin_Graphique_Couleur;
 import plugins.PluginsLoader;
 import robot.Robot;
 import GUI.Arene;
@@ -19,7 +20,8 @@ public class MoteurDeJeu extends Observable implements Runnable {
 
 	private ArrayList<Robot> listeRobot = new ArrayList<>();
 	private Plateau plateauDeJeu;
-
+	private volatile boolean pause = false;
+	
 	/**
 	 * Constructeur du Moteur de jeu prenant en param�tre le nombre de robot dans le jeu, la longueur du terrain et la largeur 
 	 * @param nbRobot
@@ -86,9 +88,11 @@ public class MoteurDeJeu extends Observable implements Runnable {
         try {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
             Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
+            Class cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Aleatoire");
 
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
             robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
+            robot.setPluginCouleur((Plugin_Graphique_Couleur)cColor.newInstance());
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | MalformedURLException e) {
             e.printStackTrace();
@@ -178,6 +182,8 @@ public class MoteurDeJeu extends Observable implements Runnable {
 			
 		}
 		
+		this.setChanged();
+		this.notifyObservers();
 		System.out.println("Le gagnant est : " + this.listeRobot.get(0));
 
 
@@ -202,8 +208,6 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				}
 			}
 		}
-
-
 	}
 
 	
@@ -211,13 +215,13 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	public void run() {
 		this.start();
 	}
-	
+
 	
 	public ArrayList<Robot> getListeRobot() {
 		return listeRobot;
 	}
 
-
+	//Modification de la liste des robots
 	public void setListeRobot(ArrayList<Robot> listeRobot) {
 		this.listeRobot = listeRobot;
 	}
