@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import plugins.Plugin_Attaque;
 import plugins.Plugin_Deplacement;
+import plugins.Plugin_Graphique_Couleur;
 import plugins.PluginsLoader;
 import robot.Robot;
 import GUI.Arene;
@@ -86,9 +87,11 @@ public class MoteurDeJeu extends Observable implements Runnable {
         try {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
             Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
+            Class cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Aleatoire");
 
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
             robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
+            robot.setPluginCouleur((Plugin_Graphique_Couleur)cColor.newInstance());
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | MalformedURLException e) {
             e.printStackTrace();

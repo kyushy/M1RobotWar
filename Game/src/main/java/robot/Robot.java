@@ -1,18 +1,13 @@
 package robot;
 
+import java.awt.Color;
 import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 
 import plugins.Plugin_Attaque;
 import plugins.Plugin_Deplacement;
+import plugins.Plugin_Graphique_Couleur;
+import plugins.Plugin_Graphique_Forme;
 
 /**
  * Class representant un robot
@@ -24,10 +19,13 @@ public class Robot {
 	private Point position;
 	private int nombrePDV = 10;
 	private int energie = 10;
+	private Color couleur;
 	
 	//PLUGIN FIX : On utilisera ça après
 	private Plugin_Attaque pluginAttaque;
 	private Plugin_Deplacement pluginDeplacement;
+	private Plugin_Graphique_Couleur pluginCouleur;
+	private Plugin_Graphique_Forme pluginForme;
 	
 	public Robot(String identifiant, Point pPosition){
 		this.position = pPosition;
@@ -103,6 +101,23 @@ public class Robot {
 
 	public String getIdentifiant() {
 		return identifiant;
+	}
+
+	public Color getCouleur() {
+		return this.couleur;
+	}
+
+	public void setPluginCouleur(Plugin_Graphique_Couleur pluginCouleur) {
+		this.pluginCouleur = pluginCouleur;
+		this.couleur = pluginCouleur.getColor(); 
+	}
+
+	public Plugin_Graphique_Forme getPluginForme() {
+		return pluginForme;
+	}
+
+	public void setPluginForme(Plugin_Graphique_Forme pluginForme) {
+		this.pluginForme = pluginForme;
 	}
 
 	/*
