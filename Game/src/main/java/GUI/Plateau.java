@@ -239,6 +239,7 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 			c.setBackground(Color.WHITE);
 		}
 		
+		
 		for(Robot r : mdj.getListeRobot()){
 			this.getArene().paintPanel(r, r.getPosition().x, r.getPosition().y);
 		}	

@@ -35,13 +35,13 @@ public class Robot {
 	public Robot(){
 	}
 	
-	public void getActionDeplacement(){
+	public Point getActionDeplacement(){
 
 		//PLUGIN FIX
 		Point newPosition = this.pluginDeplacement.getNouvellePosition(this.position, 10, 10);
 		System.out.println("Je me deplace de " + position + " a " + newPosition);
-		this.position = newPosition;
-		
+		return newPosition;
+		//this.position = newPosition;
 		
 	}
 	
@@ -66,7 +66,6 @@ public class Robot {
 
 		return (double) Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
 	}
-	
 	
 	public Point getPosition() {
 		return this.position;
