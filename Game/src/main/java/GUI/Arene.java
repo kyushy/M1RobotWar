@@ -40,7 +40,7 @@ public class Arene extends JPanel{
 		this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		for (int i =0; i<(largeur*longueur); i++){
 		    JPanel panel = new JPanel(new BorderLayout());
-		    panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		    //panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		    this.add(panel);
 		}
 		
@@ -59,8 +59,8 @@ public class Arene extends JPanel{
 	
 	public void paintPanel(Robot r, int x, int y){
 		JPanel panel = (JPanel) this.getComponent(y*10 + x);
-		//r.getPluginForme().dessinerForme(r.getCouleur(), panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight());
-		panel.setBackground(r.getCouleur());
+		r.getPluginForme().dessinerForme(r.getCouleur(), this.getGraphics(), panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+		//panel.setBackground(r.getCouleur());
 	}
 	
 }

@@ -235,11 +235,8 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
-		for(Component c : this.getArene().getComponents()){
-			c.setBackground(Color.WHITE);
-		}
-		
+
+		this.getArene().getGraphics().clearRect(0, 0, this.getArene().getWidth(), this.getArene().getHeight());
 		
 		for(Robot r : mdj.getListeRobot()){
 			this.getArene().paintPanel(r, r.getPosition().x, r.getPosition().y);
