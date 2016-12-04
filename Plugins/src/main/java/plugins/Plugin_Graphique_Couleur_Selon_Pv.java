@@ -8,7 +8,7 @@ public class Plugin_Graphique_Couleur_Selon_Pv implements Plugin_Graphique_Coule
 
 	public Color getColor(int pv, int pvMax) {
 		
-		int pourcentageRestant = pv*pvMax/pvMax;
+		int pourcentageRestant = (pv*pvMax/pvMax)*10;
 		
 		if (pourcentageRestant >= 50) {
 			return Color.GREEN;
