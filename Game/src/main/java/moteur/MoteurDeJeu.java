@@ -269,8 +269,8 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		this.notifyObservers();
 				
 		// Tant qu'il reste plus d'un robot et que le jeu n'est pas en pause
-		while (this.listeRobot.size() > 1) {
-				
+		while (this.listeRobot.size() > 1) {			
+			
 			System.out.println("-- MANCHE " + nbManches + "--");
 
 			// On parcourt la liste des robots et on leur demande leurs actions
@@ -297,11 +297,15 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				}
 				
 				try {
-					Thread.currentThread().sleep(100);
+					Thread.sleep(250);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				//on donne l'energie de fin de tour
+				
+				while(pause){
+					//le jeu est en pause.
+				}
 				
 			}
 			
@@ -361,6 +365,9 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		this.listeRobot = listeRobot;
 	}
 
+	public void setPause(boolean b){
+		this.pause = b;
+	}
 	
 	/**
 	 * Methode main

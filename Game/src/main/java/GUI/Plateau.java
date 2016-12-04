@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.MalformedURLException;
@@ -16,11 +18,15 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import moteur.MoteurDeJeu;
 import moteur.SystemeSauvegarde;
@@ -33,14 +39,14 @@ import robot.Robot;
  *	Classe principale qui va contenir tous les elements graphiques du jeu
  *	TODO : d�finir un layout pour disposer les divers elements
  */
-public class Plateau extends JFrame implements ActionListener, Observer{
+public class Plateau extends JFrame implements ActionListener, Observer, MouseListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Arene arene;
+	private Arene arene; 
 
 	/**
 	 * Attributs des menus
@@ -55,8 +61,9 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 	private JMenu partieMenu;
 	private JMenuItem loadSave;
 	private JMenuItem saveSave;
-
+	
 	private MoteurDeJeu mdj;
+	private Thread game;
 
 	private ArrayList<File> listePlugins = new ArrayList<>();
 	
@@ -68,7 +75,9 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 
 		this.menuBar = new JMenuBar();
 		this.fileMenu = new JMenu();
+		this.fileMenu.addMouseListener(this);
 		this.partieMenu = new JMenu();
+		this.partieMenu.addMouseListener(this);
 
 		//MenuBar
 		this.menuBar.add(this.fileMenu);
@@ -130,6 +139,8 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 	}
 
 	public void actionPerformed(ActionEvent arg0){
+		
+		
 		//Si on clique sur fermer dans le menu
 		if(arg0.getSource() == this.exitMenuItem ){
 			this.setVisible(false);
@@ -183,7 +194,10 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 		
 		//Si on clique sur Lancer le jeu 
 		if(arg0.getSource() == this.runPluginsMenuItem){
-			new Thread(this.mdj).start();
+			if(game == null) {
+				new Thread(this.mdj).start();
+			}
+			mdj.setPause(false);
 		}
 		
 		//Si on clique sur sauvegarder partie
@@ -237,9 +251,35 @@ public class Plateau extends JFrame implements ActionListener, Observer{
 	public void update(Observable o, Object arg) {
 
 		this.getArene().getGraphics().clearRect(0, 0, this.getArene().getWidth(), this.getArene().getHeight());
-		
+
 		for(Robot r : mdj.getListeRobot()){
 			this.getArene().paintPanel(r, r.getPosition().x, r.getPosition().y);
-		}	
+		}
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		this.mdj.setPause(true);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		
 	}
 }
