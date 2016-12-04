@@ -18,7 +18,7 @@ public class GRobot extends JComponent {
 	
 	@Override
 	public void paintComponent(Graphics g){	
-		r.getPluginForme().dessinerForme(r.getPluginCouleur().getColor(r.getNombrePDV(), 10), g, 0, 0,
+		r.getPluginForme().dessinerForme(r.getPluginCouleur().getColor(r.getCouleur(), r.getNombrePDV(), 10), g, 0, 0,
 				this.getParent().getWidth(), this.getParent().getHeight());
 	}
 }

@@ -128,7 +128,7 @@ public class Robot {
 	
 	public void setPluginCouleur(Plugin_Graphique_Couleur pluginCouleur) {
 		this.pluginCouleur = pluginCouleur;
-		this.couleur = pluginCouleur.getColor(this.nombrePDV, this.nombrePDV); 
+		this.couleur = pluginCouleur.getColor(this.couleur ,this.nombrePDV, this.nombrePDV); 
 	}
 
 	public Plugin_Graphique_Forme getPluginForme() {
