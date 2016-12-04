@@ -185,7 +185,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
         try {
             Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
             Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
-            Class cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Aleatoire");
+            Class cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Selon_Pv");
             Class cForme = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Forme_Rectangle");
             
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());

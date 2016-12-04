@@ -59,8 +59,11 @@ public class Arene extends JPanel{
 	
 	public void paintPanel(Robot r, int x, int y){
 		JPanel panel = (JPanel) this.getComponent(y*10 + x);
-		r.getPluginForme().dessinerForme(r.getCouleur(), this.getGraphics(), panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+		//r.getPluginForme().dessinerForme(r.getCouleur(), this.getGraphics(), panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
 		//panel.setBackground(r.getCouleur());
+		GRobot gr = new GRobot(r);
+		panel.add(gr);
+		gr.paintComponent(panel.getGraphics());
 	}
 	
 }

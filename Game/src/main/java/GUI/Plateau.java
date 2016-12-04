@@ -251,7 +251,7 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 	public void update(Observable o, Object arg) {
 
 		this.getArene().getGraphics().clearRect(0, 0, this.getArene().getWidth(), this.getArene().getHeight());
-
+		
 		for(Robot r : mdj.getListeRobot()){
 			this.getArene().paintPanel(r, r.getPosition().x, r.getPosition().y);
 		}
