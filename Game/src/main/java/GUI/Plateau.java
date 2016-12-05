@@ -1,32 +1,21 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileWriter;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 import moteur.MoteurDeJeu;
 import moteur.SystemeSauvegarde;
@@ -67,7 +56,7 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 	private MoteurDeJeu mdj;
 	private Thread game;
 
-	private ArrayList<File> listePlugins = new ArrayList<>();
+	//private ArrayList<File> listePlugins = new ArrayList<>();
 	
 	public Plateau(Arene arene){
 		this.setTitle("ROBOTWAR");
@@ -157,8 +146,8 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 				try {
 					String chaine = f.getSelectedFile().getName();
 					chaine = chaine.replaceAll(".class", "");
-					Class cl = PluginsLoader.getInstance().loadPlugin("plugins."+chaine);
-					Class clInterface[] = cl.getInterfaces();
+					Class<?> cl = PluginsLoader.getInstance().loadPlugin("plugins."+chaine);
+					Class<?> clInterface[] = cl.getInterfaces();
 					
 					for (int i = 0; i < clInterface.length; i++) {
 						//Si c'est un plugin d'attaque

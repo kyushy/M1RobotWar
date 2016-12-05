@@ -26,10 +26,10 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	private volatile boolean pause = false;
 	
 	/**
-	 * Constructeur du Moteur de jeu prenant en param�tre le nombre de robot dans le jeu, la longueur du terrain et la largeur 
-	 * @param nbRobot
-	 * @param longeur
-	 * @param largeur
+	 * Constructeur du Moteur de jeu prenant en parametre le nombre de robot dans le jeu, la longueur du terrain et la largeur 
+	 * @param int nbRobot
+	 * @param int longeur
+	 * @param int largeur
 	 * 
 	 */
 
@@ -45,8 +45,13 @@ public class MoteurDeJeu extends Observable implements Runnable {
 			this.listeRobot.add(robot);
 		}
 		this.plateauDeJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//start(); deja dans le main ?
 	}
+	
+
+	/**
+	 * Methode pour recharger une partie 
+	 * @param HashMap<String, Object> dataPartie
+	 */
 	
 	public void restaurerPartie(HashMap<String, Object> dataPartie) {
 		
@@ -70,8 +75,8 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				
 				try {
 					
-					Class classPlugin = null;
-					Class interfacePlugin = null;
+					Class<?> classPlugin = null;
+					Class<?> interfacePlugin = null;
 					
 					if (dataRobot.get(key).toString().contains("plugins.")) {
 						try {
@@ -141,13 +146,16 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		
 	}
 
-	public static int nombreAleaLongueur(int max){
+	/**
+	 * Méthode static qui retourne un nombre aléatoire pour positionner le robot
+	 * @param int max
+	 * @return int nombre aléatoire
+	 */
+	
+	public static int nombreAlea(int max){
 		return (int) (Math.random()*(max));
 	}
 
-	public static int nombreAleaLargeur(int max){
-		return (int) (Math.random()*(max));
-	}
 
 
 	/**
@@ -174,19 +182,20 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	 * Creation du robot a des coordonnees aleatoire
 	 * @return Robot
 	 */
+	
 	public Robot creationRobot() {
-		Robot robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
-				MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
+		Robot robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAlea(this.plateauDeJeu.getArene().getLongueur()),
+				MoteurDeJeu.nombreAlea(this.plateauDeJeu.getArene().getLargeur())));
 		while(robotExist(robot)){
-			robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAleaLongueur(this.plateauDeJeu.getArene().getLongueur()),
-					MoteurDeJeu.nombreAleaLargeur(this.plateauDeJeu.getArene().getLargeur())));
+			robot = new Robot("" + this.listeRobot.size(), new Point(MoteurDeJeu.nombreAlea(this.plateauDeJeu.getArene().getLongueur()),
+					MoteurDeJeu.nombreAlea(this.plateauDeJeu.getArene().getLargeur())));
 		}
 
         try {
-            Class cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
-            Class cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
-            Class cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Selon_Pv");
-            Class cForme = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Forme_Rectangle");
+            Class<?> cDep = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Deplacement_Aleatoire_Une_Case");
+            Class<?> cAtk = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Attaque_Courte_Portee");
+            Class<?> cColor = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Couleur_Selon_Pv");
+            Class<?> cForme = PluginsLoader.getInstance().loadPlugin("plugins.Plugin_Graphique_Forme_Rectangle");
             
             robot.setPluginDeplacement((Plugin_Deplacement) cDep.newInstance());
             robot.setPluginAttaque((Plugin_Attaque) cAtk.newInstance());
@@ -205,6 +214,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	 * @param robotReference
 	 * @return Robot
 	 */
+	
 	public Robot robotLePlusProche(Robot robotReference) {
 
 		if (this.listeRobot.size() < 2) { return null; } // Pas de robot ou que lui-meme
@@ -243,9 +253,12 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		return null;
 	}
 
-	/*
+	/**
 	 * Methode pour tester si 2 robots se chevauchent 
+	 * @param Point p
+	 * @return boolean pour verifier que 2 robots ne se chevauchent pas
 	 */
+
 	public boolean chevauchementRobot(Point p){
 		boolean bool = false;
 		for(int j = 0; j < this.listeRobot.size(); j++) {
@@ -330,6 +343,11 @@ public class MoteurDeJeu extends Observable implements Runnable {
 
 	}
 
+	/**
+	 * Méthode d'attaque 
+	 * 
+	 * @param HashMap<String, Object> dicAttaque
+	 */
 	public void phaseAttaque(HashMap<String, Object> dicAttaque) {
 
 		ArrayList<Point> listeLieux = (ArrayList<Point>) dicAttaque.get("LIEU");
@@ -361,6 +379,9 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		}
 	}
 
+	/**
+	 * Méthode appeler par le thread pour lancer le jeu
+	 */
 	
 	@Override
 	public void run() {
@@ -368,15 +389,27 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	}
 
 	
+	/**
+	 * Getter de la liste des robots
+	 * @return ArrayList<Robot>
+	 */
+	
 	public ArrayList<Robot> getListeRobot() {
 		return listeRobot;
 	}
 
-	//Modification de la liste des robots
+	/**
+	 * Setter de la liste des robots
+	 * @param ArrayList<Robot> listeRobot
+	 */
 	public void setListeRobot(ArrayList<Robot> listeRobot) {
 		this.listeRobot = listeRobot;
 	}
 
+	/**
+	 * Setter du boolean de mise en pause
+	 * @param boolean b
+	 */
 	public void setPause(boolean b){
 		this.pause = b;
 	}
@@ -387,8 +420,7 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	 */
 
 	public static void main(String[] args) {
-		MoteurDeJeu mdj = new MoteurDeJeu(10, 10, 10);
-		//mdj.start();
+		MoteurDeJeu mdj = new MoteurDeJeu(5, 10, 10);
 	}
 
 }
