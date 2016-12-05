@@ -19,6 +19,7 @@ import robot.Robot;
 
 /**
  *	Classe qui represente la zone graphique ou les robots s'affrontent. 
+ *	Author : Frederic
  */
 
 
@@ -28,6 +29,11 @@ public class Arene extends JPanel{
 	private int largeur;
 	
 
+	/**
+	 * Constructeur
+	 * @param longueur nombre de case en longueur
+	 * @param largeur nombre de case en largeur
+	 */
 	public Arene (int longueur, int largeur){
 		
 		this.longueur = longueur;
@@ -37,11 +43,10 @@ public class Arene extends JPanel{
 		this.setLayout(layout);
 		this.setBackground(Color.WHITE);
 
-		//DEBUG : affichage des cases 
+		 
 		this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		for (int i =0; i<(largeur*longueur); i++){
 		    JPanel panel = new JPanel(new BorderLayout());
-		    //panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		    this.add(panel);
 		}
 			
@@ -57,15 +62,24 @@ public class Arene extends JPanel{
 		return largeur;
 	}
 	
+	/**
+	 * Dessine le robot dans le panel correspondant à sa position
+	 * @param r robot à dessiner
+	 * @param x position en X
+	 * @param y position en Y
+	 */
 	public void paintPanel(Robot r, int x, int y){
 		JPanel panel = (JPanel) this.getComponent(y*10 + x);
-		//r.getPluginForme().dessinerForme(r.getCouleur(), panel.getGraphics(), panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
-		//panel.setBackground(r.getCouleur());
+
 		GRobot gr = new GRobot(r);
 		panel.add(gr);
 		gr.paintComponent(panel.getGraphics());
 	}
 	
+	/**
+	 * Applique l'animation de l'attaque sur la cible
+	 * @param r le robot ciblé
+	 */
 	public void applyAnimation(Robot r){
 		JPanel panel = (JPanel) this.getComponent(r.getPosition().y*10 + r.getPosition().x);
 		r.getPluginAttaque().animationAttaque(panel.getGraphics(), new Point(0,0));		

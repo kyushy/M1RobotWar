@@ -30,6 +30,7 @@ import robot.Robot;
 
 /**
  *	Classe principale qui va contenir tous les elements graphiques du jeu
+ *	@author Frederic
  */
 public class Plateau extends JFrame implements ActionListener, Observer, MouseListener {
 
@@ -277,7 +278,7 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 
 	/**
 	 * Méthode de mise à jour de l'interface graphique
-	 * 
+	 * Pattern Observer/Observable
 	 * @param Observable o 
 	 * @param Object arg
 	 */
@@ -303,6 +304,10 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 		
 	}
 
+	/**
+	 * Methode hérité du MouseListener
+	 * Utiliser pour mettre en pause le jeu lors d'un clic dans le menu
+	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		this.mdj.setPause(true);
