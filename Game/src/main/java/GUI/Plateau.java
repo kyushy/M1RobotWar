@@ -26,15 +26,13 @@ import plugins.Plugin_Graphique_Forme;
 import plugins.PluginsLoader;
 import robot.Robot;
 
+
+
 /**
  *	Classe principale qui va contenir tous les elements graphiques du jeu
- *	TODO : d�finir un layout pour disposer les divers elements
  */
 public class Plateau extends JFrame implements ActionListener, Observer, MouseListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private Arene arene; 
@@ -56,8 +54,10 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 	private MoteurDeJeu mdj;
 	private Thread game;
 
-	//private ArrayList<File> listePlugins = new ArrayList<>();
-	
+	/**
+	 * Constructeur du plateau mettant en place l'arene et le menu
+	 * @param Arene arene
+	 */
 	public Plateau(Arene arene){
 		this.setTitle("ROBOTWAR");
 		this.setSize(600, 600);
@@ -129,6 +129,11 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 		this.setVisible(true);
 	}
 
+
+	/**
+	 * Méthode  qui gere les actions effectuer sur les differents items des menus
+	 * @param ActionEvent arg0
+	 */
 	public void actionPerformed(ActionEvent arg0){
 		
 		
@@ -254,14 +259,28 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 		}
 	}
 	
+	/**
+	 * Getter Arene
+	 * @return Arene
+	 */
 	public Arene getArene() {
 		return arene;
 	}
 	
+	/**
+	 * Setter du moteurDeJeu
+	 * @param MoteurDeJeu mdj
+	 */
 	public void setMoteurDeJeu(MoteurDeJeu mdj){
 		this.mdj = mdj;
 	}
 
+	/**
+	 * Méthode de mise à jour de l'interface graphique
+	 * 
+	 * @param Observable o 
+	 * @param Object arg
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 
