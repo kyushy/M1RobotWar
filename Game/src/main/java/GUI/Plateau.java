@@ -250,6 +250,17 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 	@Override
 	public void update(Observable o, Object arg) {
 
+		//si arg != null alors il s'agit d'une attaque
+		if(arg != null){
+			Robot r = (Robot) arg;
+			this.getArene().applyAnimation(r);
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		this.getArene().getGraphics().clearRect(0, 0, this.getArene().getWidth(), this.getArene().getHeight());
 		
 		for(Robot r : mdj.getListeRobot()){

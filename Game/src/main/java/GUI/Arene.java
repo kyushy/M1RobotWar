@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -43,8 +44,7 @@ public class Arene extends JPanel{
 		    //panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		    this.add(panel);
 		}
-		
-		
+			
 	} 
 	
 
@@ -59,11 +59,16 @@ public class Arene extends JPanel{
 	
 	public void paintPanel(Robot r, int x, int y){
 		JPanel panel = (JPanel) this.getComponent(y*10 + x);
-		//r.getPluginForme().dessinerForme(r.getCouleur(), this.getGraphics(), panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+		//r.getPluginForme().dessinerForme(r.getCouleur(), panel.getGraphics(), panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
 		//panel.setBackground(r.getCouleur());
 		GRobot gr = new GRobot(r);
 		panel.add(gr);
 		gr.paintComponent(panel.getGraphics());
+	}
+	
+	public void applyAnimation(Robot r){
+		JPanel panel = (JPanel) this.getComponent(r.getPosition().y*10 + r.getPosition().x);
+		r.getPluginAttaque().atkGrapgique(panel.getGraphics(), new Point(0,0));		
 	}
 	
 }

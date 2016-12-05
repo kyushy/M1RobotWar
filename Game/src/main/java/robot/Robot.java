@@ -52,6 +52,7 @@ public class Robot {
 
 	}
 	
+	
 	/**
 	 * Calcul de la distance entre deux robots
 	 * @param robot1
@@ -96,6 +97,10 @@ public class Robot {
 		this.energie++;
 	}
 
+	public Plugin_Attaque getPluginAttaque(){
+		return this.pluginAttaque;
+	}
+	
 	public void setPluginAttaque(Plugin_Attaque pluginAttaque) {
 		this.pluginAttaque = pluginAttaque;
 	}

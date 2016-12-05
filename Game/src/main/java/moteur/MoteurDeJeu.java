@@ -284,8 +284,15 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				
 				this.listeRobot.get(i).setPosition(p);
 				
+				//notification à l'interface graphique + delai mouvement
 				this.setChanged();
 				this.notifyObservers();
+				
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				
 				HashMap<String, Object> dicAttaque = listeRobot.get(i).getActionAttaque();
 				
@@ -296,11 +303,6 @@ public class MoteurDeJeu extends Observable implements Runnable {
 					this.phaseAttaque(dicAttaque);
 				}
 				
-				try {
-					Thread.sleep(250);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				//on donne l'energie de fin de tour
 				
 				while(pause){
@@ -341,6 +343,16 @@ public class MoteurDeJeu extends Observable implements Runnable {
 				System.out.println("Un robot touche !");
 				robotVise.setNombrePDV(robotVise.getNombrePDV() - (Integer) dicAttaque.get("PUISSANCE"));
 	
+				//Notification à l'interface graphique + delai animation
+				this.setChanged();
+				this.notifyObservers(robotVise);
+				
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
 				if (robotVise.getNombrePDV() <= 0) {
 					System.out.println("Un robot élimine");
 					this.listeRobot.remove(robotVise);
