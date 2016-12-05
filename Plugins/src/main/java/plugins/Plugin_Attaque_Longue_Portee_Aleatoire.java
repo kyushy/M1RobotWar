@@ -1,5 +1,7 @@
 package plugins;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,6 +49,11 @@ public class Plugin_Attaque_Longue_Portee_Aleatoire implements Plugin_Attaque, S
 		dicAttaque.put("PUISSANCE", PUISSANCE);
 		
 		return dicAttaque;
+	}
+
+	public void atkGrapgique(Graphics g, Point position) {
+		g.setColor(Color.BLACK);
+		g.fillOval(position.x, position.y, 10, 10);		
 	}
 
 }

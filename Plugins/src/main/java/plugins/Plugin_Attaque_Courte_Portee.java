@@ -1,5 +1,7 @@
 package plugins;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,5 +66,10 @@ public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque, Serializabl
 		dicAttaque.put("PUISSANCE", PUISSANCE);
 		dicAttaque.put("LIEU", listeLieux);
 		return dicAttaque;
+	}
+
+	public void atkGrapgique(Graphics g, Point position) {
+		g.setColor(Color.RED);
+		g.fillOval(position.x, position.y, 40, 40);	
 	}
 }
