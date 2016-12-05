@@ -49,8 +49,10 @@ public class MoteurDeJeu extends Observable implements Runnable {
 	
 
 	/**
-	 * Methode pour recharger une partie 
-	 * @param HashMap<String, Object> dataPartie
+	 * Methode pour charger une partie en fonction de la HashMap deseralisee recuperee
+	 * Parcours des attributs du robot par reflexivite, invoke des methodes set associees, appel au plugin loader 
+	 * si plugin rencontre
+	 * @param HashMap<String, Object> dataPartie HashMap deseralisee renvoyee par SystemeSauvegarde
 	 */
 	
 	public void restaurerPartie(HashMap<String, Object> dataPartie) {
@@ -62,14 +64,10 @@ public class MoteurDeJeu extends Observable implements Runnable {
 		
 		for (int i = 0; i < dataRobots.size(); i++) {
 			HashMap<String, Object> dataRobot = ((HashMap<String, Object>) dataRobots.get(i));
-			System.out.println(dataRobot);
 			
 			Robot robot = new Robot();
 			
 			for (String key : dataRobot.keySet()) {
-				
-				System.out.println("key = " + key);
-				System.out.println("value = " + dataRobot.get(key));
 				
 				if (dataRobot.get(key) == null) { continue; } 
 				
