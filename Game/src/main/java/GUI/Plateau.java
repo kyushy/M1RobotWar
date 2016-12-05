@@ -32,6 +32,8 @@ import moteur.MoteurDeJeu;
 import moteur.SystemeSauvegarde;
 import plugins.Plugin_Attaque;
 import plugins.Plugin_Deplacement;
+import plugins.Plugin_Graphique_Couleur;
+import plugins.Plugin_Graphique_Forme;
 import plugins.PluginsLoader;
 import robot.Robot;
 
@@ -181,7 +183,31 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 									e.printStackTrace();
 								}
 							}
-						}						
+						}
+						
+						//Chargement dynamique plugin graphique couleur
+						if (clInterface[i].getName().equals("plugins.Plugin_Graphique_Couleur")){
+							ArrayList<Robot> listeRobot = this.mdj.getListeRobot();
+							for (Robot robot : listeRobot) {
+								try {
+									robot.setPluginCouleur((Plugin_Graphique_Couleur) cl.newInstance());
+								} catch (InstantiationException | IllegalAccessException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						
+						//Chargement dynamique plugin graphique forme
+						if (clInterface[i].getName().equals("plugins.Plugin_Graphique_Forme")){
+							ArrayList<Robot> listeRobot = this.mdj.getListeRobot();
+							for (Robot robot : listeRobot) {
+								try {
+									robot.setPluginForme((Plugin_Graphique_Forme) cl.newInstance());
+								} catch (InstantiationException | IllegalAccessException e) {
+									e.printStackTrace();
+								}
+							}
+						}
 					}
 					
 				} catch (ClassNotFoundException e) {
