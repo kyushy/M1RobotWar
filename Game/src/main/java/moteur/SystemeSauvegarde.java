@@ -6,13 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import robot.Robot;
 
@@ -20,10 +16,22 @@ public class SystemeSauvegarde {
 
 	private MoteurDeJeu moteur;
 
+	/**
+	 * Constructeur du systeme de sauvegarde
+	 * 
+	 * @param moteur MoteurDeJeu
+	 */
 	public SystemeSauvegarde(MoteurDeJeu moteur) {
 		this.moteur = moteur;
 	}
 
+	/**
+	 * Sauvegarder la partie actuelle en se basant sur les informations recuperees par le moteur
+	 * Generation d'une HashMap qui sera serialisee et stocker dans le fichier indique
+	 * 
+	 * @param cheminDeSauvegarde File Fichier ou stocker la HashMap serialisee
+	 * @return HashMap<String, Object> savePartie HashMap resultant de l'operation
+	 */
 	public HashMap<String, Object> sauvegarder(File cheminDeSauvegarde) {
 
 		HashMap<String, Object> savePartie = new HashMap<>();
@@ -56,6 +64,12 @@ public class SystemeSauvegarde {
 
 	}
 
+	/**
+	 * Stocke les attributs obtenus par reflexivite et leur valeur dans la HashMap indiquee en parametre
+	 * 
+	 * @param o Object Actuellement objet robot de la liste du moteur
+	 * @param hmapRetour HashMap<String, Object> Est completee par la methode
+	 */
 	public void loadDataFields(Object o, HashMap<String, Object> hmapRetour) {
 
 		if (o == null) { return; }
@@ -102,12 +116,18 @@ public class SystemeSauvegarde {
 
 		}
 	}
-
+	
+	/**
+	 * Deserialisation de la HashMap dans le fichier de sauvegarde indique et renvoie de cette derniere
+	 * 
+	 * @param cheminDeSauvegarde File Fichier ou aller recuperer la HashMap serialisee
+	 * @return HashMap<String, Object> dataPartie HashMap issue de la sauvegarde
+	 */
 	public HashMap<String, Object> chargerSauvegarde(File cheminVersauvegarde) {
 
 		HashMap<String, Object> dataPartie = null;
 		try {
-			FileInputStream fis = new FileInputStream(cheminVersauvegarde /*"robotwarplay.ser"*/);
+			FileInputStream fis = new FileInputStream(cheminVersauvegarde);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			dataPartie = (HashMap) ois.readObject();
 			ois.close();
@@ -123,15 +143,7 @@ public class SystemeSauvegarde {
 			c.printStackTrace();
 			return dataPartie;
 		}
-		/*System.out.println("Deserialisation de la hashmap..");
-		// Display content using Iterator
-		Set set = dataPartie.entrySet();
-		Iterator iterator = set.iterator();
-		while(iterator.hasNext()) {
-			Map.Entry mentry = (Map.Entry)iterator.next();
-			System.out.print("key: "+ mentry.getKey() + " & Value: ");
-			System.out.println(mentry.getValue());
-		}*/
+
 		return dataPartie;
 	}
 
