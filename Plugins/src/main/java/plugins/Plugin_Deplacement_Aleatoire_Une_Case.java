@@ -6,9 +6,12 @@ import java.util.Random;
 
 public class Plugin_Deplacement_Aleatoire_Une_Case implements Plugin_Deplacement, Serializable {
 
+	private static final long serialVersionUID = -2187265944145739198L;
+
 	/**
 	 * Nouvelles coordonnees aleatoires avec deplacement d'une case (inclus diagonale)
-	 * Prend en compte les bornes (0 et taille de l'arene en parametre)
+	 * 
+	 * @see plugins.Plugin_Deplacement#getNouvellePosition(java.awt.Point, int, int)
 	 */
 	public Point getNouvellePosition(Point positionActuelle, int longueurArene,
 			int largeurArene) {

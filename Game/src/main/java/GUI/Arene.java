@@ -68,7 +68,7 @@ public class Arene extends JPanel{
 	
 	public void applyAnimation(Robot r){
 		JPanel panel = (JPanel) this.getComponent(r.getPosition().y*10 + r.getPosition().x);
-		r.getPluginAttaque().atkGrapgique(panel.getGraphics(), new Point(0,0));		
+		r.getPluginAttaque().animationAttaque(panel.getGraphics(), new Point(0,0));		
 	}
 	
 }

@@ -9,16 +9,24 @@ import java.util.HashMap;
 
 public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque, Serializable {
 	
+	private static final long serialVersionUID = -4554029999891306493L;
+	/**
+	 * Nombre d'energie depense suite a cette attaque
+	 */
 	private static int ENERGIE = 1;
+	/**
+	 * Nombre de PV perdus par le robot victime
+	 */
 	private static int PUISSANCE = 1;
+	/** 
+	 * Portee de l'attaque (nombre de case autour visee)
+	 */
 	private static int PORTEE = 1;
-	// TODO : graphisme > image d'un poing aux endroits vises ?
 
-	/*
+	/**
 	 * Attaque faible de courte portee qui vise les cases autour (diagonales comprises) 
 	 * sur le terrain
 	 * @see plugins.Plugin_Attaque#attaque(java.awt.Point, int, int)
-	 * @return HashMap<String, Object> dicAttaque avec "LIEU"=>ArrayList<Point>, "ENERGIE"=>int et "PUISSANCE"=>int
 	 */
 	public HashMap<String, Object> attaque(Point positionAttaquant, 
 			int longueurArene, int largeurArene) {
@@ -35,23 +43,14 @@ public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque, Serializabl
 			iterator++;
 		}
 		
-		/*System.out.println("champs action :");
-		for (int i = 0; i < chgX.length; i++) {
-			System.out.print(chgX[i] + ", ");
-		}
-		System.out.println();*/
-		
 		for (int i = 0; i < chgX.length; i++) {
 			for (int j = 0; j < chgY.length; j++) {
 				// Cas auto-attaque
 				if (chgX[i] == 0 && chgY[j] == 0) { continue; }
 				
-				//System.out.println("chgX[i]=" + chgX[i] + ", chgY=" + chgY[j]);
-				
 				int xAttaque = positionAttaquant.x + chgX[i];
 				int yAttaque = positionAttaquant.y + chgY[j];
-				//System.out.println("essai (" + xAttaque + ", " + yAttaque + ")");
-				
+
 				// Ne pas sortir des bornes
 				if (xAttaque < 0 || xAttaque > longueurArene-1 
 						|| yAttaque < 0 || yAttaque > largeurArene-1 ) {
@@ -68,7 +67,11 @@ public class Plugin_Attaque_Courte_Portee implements Plugin_Attaque, Serializabl
 		return dicAttaque;
 	}
 
-	public void atkGrapgique(Graphics g, Point position) {
+	/**
+	 * Affiche un rond de couleur rouge 40x40 sur le robot attaque
+	 * @see plugins.Plugin_Attaque#animationAttaque(java.awt.Graphics, java.awt.Point)
+	 */
+	public void animationAttaque(Graphics g, Point position) {
 		g.setColor(Color.RED);
 		g.fillOval(position.x, position.y, 40, 40);	
 	}
