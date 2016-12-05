@@ -96,6 +96,7 @@ public class Robot {
 	 * Getter energie
 	 * @return int energie
 	 */
+	
 	public int getEnergie() {
 		return energie;
 	}
