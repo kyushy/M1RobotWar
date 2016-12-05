@@ -44,9 +44,9 @@ public class PluginsLoader {
 	 */
 	public Class<?> loadPlugin(String name) throws ClassNotFoundException, MalformedURLException {
 		File pluginDir = new File("../Plugins" + File.separator + "target" + File.separator + "classes");
-		//System.out.println("load file at " + pluginDir.getAbsolutePath());
-
-		URL[] classLoaderUrls = new URL[]{ pluginDir.toURI().toURL() };
+		//System.out.println("load file at " + pluginDir2.getAbsolutePath());
+		File pluginDir2 = new File("./Plugins/");
+		URL[] classLoaderUrls = new URL[]{ pluginDir2.toURI().toURL() };
         URLClassLoader loader = new URLClassLoader(classLoaderUrls);
         return loader.loadClass(name);
 	}

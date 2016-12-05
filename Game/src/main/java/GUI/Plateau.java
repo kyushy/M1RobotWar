@@ -146,7 +146,7 @@ public class Plateau extends JFrame implements ActionListener, Observer, MouseLi
 		//Si on clique sur charger un plugin
 		if( arg0.getSource() == this.loadMenuItem ){
 			JFileChooser f = new JFileChooser();
-			f.setCurrentDirectory(new File("../Plugins" + File.separator + "target" + File.separator + "classes")); 
+			f.setCurrentDirectory(new File("./Plugins")); 
 			f.changeToParentDirectory(); 
 			if(f.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 				try {
