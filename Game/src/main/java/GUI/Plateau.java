@@ -23,7 +23,7 @@ import plugins.Plugin_Attaque;
 import plugins.Plugin_Deplacement;
 import plugins.Plugin_Graphique_Couleur;
 import plugins.Plugin_Graphique_Forme;
-import plugins.PluginsLoader;
+import pluginsGame.PluginsLoader;
 import robot.Robot;
 
 
