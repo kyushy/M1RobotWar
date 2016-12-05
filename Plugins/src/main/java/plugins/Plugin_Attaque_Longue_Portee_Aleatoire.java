@@ -64,7 +64,7 @@ public class Plugin_Attaque_Longue_Portee_Aleatoire implements Plugin_Attaque, S
 	 */
 	public void animationAttaque(Graphics g, Point position) {
 		g.setColor(Color.BLACK);
-		g.fillOval(position.x, position.y, 10, 10);		
+		g.fillOval(position.x, position.y, 40, 40);		
 	}
 
 }
