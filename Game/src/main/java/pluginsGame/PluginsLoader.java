@@ -46,7 +46,7 @@ public class PluginsLoader {
 		File pluginDir = new File("../Plugins" + File.separator + "target" + File.separator + "classes");
 		//System.out.println("load file at " + pluginDir2.getAbsolutePath());
 		File pluginDir2 = new File("./Plugins/");
-		URL[] classLoaderUrls = new URL[]{ pluginDir2.toURI().toURL() };
+		URL[] classLoaderUrls = new URL[]{ pluginDir.toURI().toURL() };
         URLClassLoader loader = new URLClassLoader(classLoaderUrls);
         return loader.loadClass(name);
 	}
